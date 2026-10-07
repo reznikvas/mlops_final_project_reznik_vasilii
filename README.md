@@ -244,5 +244,9 @@ Dockerfile frontend 1.7 и Python 3.12.13-slim-bookworm для `linux/amd64` с�
 из Docker Hub во время сборки. Для другого Registry требуются копии тех же образов
 и соответствующие digest в `.gitlab-ci.yml`. Локальная сборка использует Docker Hub;
 базовый образ можно задать через `--build-arg PYTHON_IMAGE=<image@digest>`.
+Утилиты CI (uv, SSH, Skopeo, jq, kubectl, Helm) собраны из `mlops/ci/Dockerfile`;
+`CI_TOOLS_IMAGE` фиксирует digest. Сборка: `docker build -f mlops/ci/Dockerfile -t <registry>/build-deps/ci-tools:<version> .`.
+После `docker push` новый digest задаётся в `.gitlab-ci.yml`; утилиты не скачиваются
+во время deploy. Kubectl/Helm проверяются по SHA256 при сборке CI-образа.
 Для Kubernetes дополнительно используются protected Variables `KUBE_CONFIG_B64`,
 `KUBE_NAMESPACE`, `GRAFANA_PASSWORD`; kubeconfig и пароль — masked/hidden.
