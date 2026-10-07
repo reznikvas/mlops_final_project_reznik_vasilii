@@ -238,5 +238,11 @@ Deploy передаёт `CI_REGISTRY_PASSWORD` через SSH stdin и удал�
 config после завершения. S3-init на ВМ использует приватный env-файл.
 
 Runner требует тег `k8s`; DinD недоступен. Сборка — [BuildKit rootless](https://docs.gitlab.com/ci/docker/using_buildkit/).
+Dockerfile frontend 1.7 и Python 3.12.13-slim-bookworm для `linux/amd64` скопированы
+в Registry проекта (`build-deps/dockerfile`, `build-deps/python`). CI использует
+`BUILD_FRONTEND_IMAGE`/`BUILD_PYTHON_IMAGE` по digest, исключая загрузку этих образов
+из Docker Hub во время сборки. Для другого Registry требуются копии тех же образов
+и соответствующие digest в `.gitlab-ci.yml`. Локальная сборка использует Docker Hub;
+базовый образ можно задать через `--build-arg PYTHON_IMAGE=<image@digest>`.
 Для Kubernetes дополнительно используются protected Variables `KUBE_CONFIG_B64`,
 `KUBE_NAMESPACE`, `GRAFANA_PASSWORD`; kubeconfig и пароль — masked/hidden.

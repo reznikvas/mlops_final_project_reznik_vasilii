@@ -1,5 +1,6 @@
 # syntax=docker/dockerfile:1.7
-FROM python:3.12.13-slim-bookworm
+ARG PYTHON_IMAGE=python:3.12.13-slim-bookworm
+FROM ${PYTHON_IMAGE}
 ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 PIP_NO_CACHE_DIR=1
 WORKDIR /app
 COPY requirements.txt .

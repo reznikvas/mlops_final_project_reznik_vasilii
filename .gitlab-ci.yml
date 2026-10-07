@@ -50,13 +50,15 @@ build:
     entrypoint: [""]
   variables:
     BUILDKITD_FLAGS: --oci-worker-no-process-sandbox
+    BUILD_FRONTEND_IMAGE: $CI_REGISTRY_IMAGE/build-deps/dockerfile@sha256:b5f3b260a9678e1d83d2fce86eeddf79420b79147eaba2a25986f47133d73720
+    BUILD_PYTHON_IMAGE: $CI_REGISTRY_IMAGE/build-deps/python@sha256:6e13e65c55e33adf203d77ee371cf8bf5d81bd4902ef07565721f46bf44917af
   before_script:
     - umask 077
     - mkdir -p ~/.docker
     - task_auth=$(printf '%s:%s' "$CI_REGISTRY_USER" "$CI_REGISTRY_PASSWORD" | base64 | tr -d '\n')
     - printf '{"auths":{"%s":{"auth":"%s"}}}\n' "$CI_REGISTRY" "$task_auth" > ~/.docker/config.json
   script:
-    - buildctl-daemonless.sh build --frontend dockerfile.v0 --local context=. --local dockerfile=. --opt platform=linux/amd64 --output "type=image,name=$CI_REGISTRY_IMAGE:build-$CI_PIPELINE_ID,push=true" --metadata-file build-metadata.json
+    - buildctl-daemonless.sh build --frontend dockerfile.v0 --local context=. --local dockerfile=. --opt platform=linux/amd64 --opt "build-arg:BUILDKIT_SYNTAX=$BUILD_FRONTEND_IMAGE" --opt "build-arg:PYTHON_IMAGE=$BUILD_PYTHON_IMAGE" --output "type=image,name=$CI_REGISTRY_IMAGE:build-$CI_PIPELINE_ID,push=true" --metadata-file build-metadata.json
   artifacts:
     paths: [build-metadata.json]
     expire_in: 1 day
