@@ -1,7 +1,6 @@
 # Соответствие заданию
 
-Проверено 05–06.10.2026. Полный отчёт: [report.md](report.md).
-`OK` означает фактически выполненную проверку, а не наличие конфигурации.
+Проверено 05–06.10.2026. `OK` — проверка пройдена. [Метрики и версии](report.md).
 
 | Требование | Файл / действие | Проверка и результат |
 |---|---|---|
@@ -31,8 +30,5 @@
 | Восстановление Kubernetes | scripts/check_k8s_alert.py | OK: firing → новый Pod, повторный S3-init → resolved; [протокол](evidence/k8s-recovery.json) |
 | Правила 5xx/latency/availability | mlops/deploy/alerts-test.yml | OK: promtool firing/resolved на синтетических рядах, CI test_alerts; [лог](evidence/alert-rules-tests.txt) |
 
-Код опубликован в GitLab, образ — в Container Registry.
-Все шесть стадий CI/CD успешны. Отдельный SSH-ключ CI настроен с ограничениями;
-[проверены вход и запрет forwarding](evidence/ci-ssh-key.json).
-После возобновления ВМ выполнено
-[восстановление Airflow и доставки логов](evidence/recovery-after-renewal.json).
+Дополнительно: [ограничения SSH-ключа CI](evidence/ci-ssh-key.json),
+[восстановление Airflow и логов после TTL](evidence/recovery-after-renewal.json).

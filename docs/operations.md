@@ -1,7 +1,7 @@
 # Эксплуатация и сохранённые результаты
 
-Состояние проверено 05–06.10.2026. Срок жизни учебной ВМ — 5 часов.
-S3-артефакты и локальные протоколы проверок хранятся независимо от ВМ.
+Проверено 05–06.10.2026. TTL ВМ — 5 часов; S3 и локальные резервные копии независимы
+от ВМ. CI Variables и требования Runner — в [README](../README.md#cicd).
 
 ## Доступ к текущему запуску
 
@@ -21,7 +21,7 @@ SSH-конфигурация — `.secrets/ssh_config`, имя хоста `cours
 `.secrets/airflow_admin_password` и `.secrets/grafana_password`.
 Эти файлы приватные и не входят в Git. ClearML открыт только через loopback/SSH.
 
-Команда запуска туннелей в отдельном терминале после закрытия прежних подключений:
+Запуск туннелей в отдельном терминале (локальные порты должны быть свободны):
 
 ```bash
 ssh -F .secrets/ssh_config -N -o ExitOnForwardFailure=yes \
@@ -32,14 +32,13 @@ ssh -F .secrets/ssh_config -N -o ExitOnForwardFailure=yes \
   -L 18080:127.0.0.1:8080 -L 18081:127.0.0.1:8081 course-vm
 ```
 
-После перевыдачи требуется обновление SSH HostName и проверка нового host key.
-Порты для новых туннелей должны быть свободны.
+После перевыдачи проверяются SSH HostName/host key, HTTP health API/Airflow,
+readiness Kubernetes и новые логи Loki. [Проверка после TTL](evidence/resources-20261006.json).
 
 ## Повтор обучения и обновление сервисов
 
 Текущий проект на ВМ: `/home/ubuntu/ecom`, секреты: `/home/ubuntu/ecom-secrets`.
-Локальный `.secrets/release.env` фиксирует фактически развёрнутые образ и модель.
-Они также перечислены в [отчёте](report.md).
+Версии образа и модели — в `.secrets/release.env` и [отчёте](report.md).
 
 Проектный ClearML запускается на ВМ из каталога проекта:
 
@@ -61,8 +60,7 @@ PYTHONPATH="$PWD" uv run python -m mlops.clearml.clearml_pipeline \
   --processed-manifest Reznik_Vasilii_project/processed_data/f21822b6eef45530/manifest.json
 ```
 
-SDK env задаёт API/Web/Files адреса `127.0.0.1` на портах 18008/18080/18081
-и те же credentials. Файл `~/clearml.conf` при этом не изменяется.
+SDK env: API/Web/Files на `127.0.0.1:18008/18080/18081`, credentials сервера.
 
 После изменения кода DAG/подготовки требуется пересборка Airflow и замена контейнера
 (команды на ВМ, из `/home/ubuntu/ecom`):
@@ -80,14 +78,6 @@ sudo docker compose --env-file ../ecom-secrets/services.env \
 
 ## Резервные копии
 
-После возобновления ВМ 05.10 обнаружены и устранены два сбоя:
-PostgreSQL Airflow не имел политики рестарта (добавлена `unless-stopped`),
-а Docker-журнал API содержал 262 нулевых байта после выключения.
-Старый журнал сохранён приватно в `.artifacts/backups/api-log-before-recreate.gz`;
-пересоздан только API, без удаления модельного volume. Повторная проверка
-Prometheus/Grafana/Loki на новых прогнозах прошла.
-Протокол: [recovery-after-renewal.json](evidence/recovery-after-renewal.json).
-
 При ошибке Alloy `invalid character '\\x00'` от Docker daemon сначала сохраняется
 повреждённый журнал из `docker inspect --format '{{.LogPath}}' ecom-api` вне Git,
 затем выполняется `compose up -d --no-deps --force-recreate --wait api` с текущими
@@ -97,12 +87,8 @@ env релиза. Активный Docker-журнал и volumes сохраня
 На ПК сохранены `.artifacts/backups/airflow.sql.gz` и
 `.artifacts/backups/clearml-volumes.tar.gz`, права 600. Первый — `pg_dump` БД Airflow;
 второй — архив volumes остановленного ClearML: `mongo/`, `elastic/`, `redis/`, `files/`.
-После архивации ClearML запущен и все задачи повторно проверены.
-`gzip -t` обоих архивов прошёл. Восстановление проверено 06.10.2026 в отдельном
-Compose-проекте с пустыми volumes на существующей ВМ: 5 DAG runs, 12 ClearML-задач,
-расшифровка Connection и SHA256 четырёх файлов артефактов совпали.
-[Протокол](evidence/backup-restore.json). Временные контейнеры и volumes удалены;
-развёртывание инфраструктуры на новой ВМ отдельно не проверялось.
+Целостность gzip и восстановление в пустые volumes на существующей ВМ проверены:
+[протокол](evidence/backup-restore.json). Создание новой ВМ не тестировалось.
 
 Архивы содержат приватные данные сервисов. Резервная копия `.secrets/` также
 хранится в приватном хранилище: без исходного Fernet key Airflow не расшифрует Connection.
@@ -127,16 +113,6 @@ CSV, processed и модель доступны в S3; Docker-образ сох�
 5. Повтор smoke и проверки мониторинга. При восстановлении существующих volumes
    сначала требуется отдельная резервная копия; описанный порядок рассчитан на пустые БД.
 
-## CI/CD в новом окружении
-
-Для нового окружения требуются CI Variables и Runner с тегом `k8s`.
-Сборка использует rootless BuildKit; privileged Runner не требуется.
-Registry login использует токен текущего CI job и временный Docker config на ВМ.
-Полный перечень переменных — в README; дополнения Kubernetes — в [инструкции](kubernetes.md).
-Все шесть стадий CI/CD пройдены в pipeline 11202, включая deploy jobs 66164/66165 и тесты алертов.
-В следующих pipeline manual deploy выбранной пары image digest/model запускается
-после успешных build/save. Смена ВМ требует проверки адреса и доверенного host key.
-
 ## Отдельный SSH-ключ CI
 
 Ключ пользователя `ubuntu` действует до 05.11.2026 23:59:59 по Белграду
@@ -144,8 +120,7 @@ Registry login использует токен текущего CI job и вре
 `restrict,expiry-time="20261105225959"`. OpenSSH этой ВМ принимает время
 в системном часовом поясе без суффикса `Z`. `restrict` запрещает перенаправление
 портов, agent/X11 forwarding, PTY и пользовательский rc; команды deploy разрешены.
-Вход проверен с `IdentitiesOnly=yes`, перенаправление получило
-`administratively prohibited`. [Протокол и fingerprint](evidence/ci-ssh-key.json).
+Вход и запрет forwarding проверены: [протокол и fingerprint](evidence/ci-ssh-key.json).
 
 Закрытый ключ находится только в `.secrets/ci_deploy_key` и CI Variable
 `SSH_PRIVATE_KEY_B64` (masked, hidden, protected). Для досрочного отзыва из
@@ -155,7 +130,4 @@ Registry login использует токен текущего CI job и вре
 
 ## Kubernetes
 
-Инференс: `http://127.0.0.1:28000/docs`, Grafana: `http://127.0.0.1:23000/d/ecom`,
-Prometheus: `http://127.0.0.1:29090`, Loki: `http://127.0.0.1:23100` при работающих
-port-forward. Команды запуска, Secret, quota и восстановление — в [kubernetes.md](kubernetes.md).
-После замены Pod требуется новый port-forward API; мониторинг использует PVC.
+Команды port-forward, адреса, Secrets, квоты и восстановление — в [kubernetes.md](kubernetes.md).

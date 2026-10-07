@@ -1,36 +1,29 @@
 # Инференс и мониторинг в Kubernetes
 
-Используется нативный вариант Deployment/Service. KServe — альтернативный способ
-развёртывания из задания; установка его контроллера не требуется.
-Модель и processed-версия общие с вариантом на ВМ. Обучение для Kubernetes не меняется.
+Нативный Deployment/Service; KServe — альтернатива из задания.
+Модель и processed-версия общие с вариантом на ВМ.
 
 ## Состав
 
 - `mlops/deploy/k8s/deployment.yml`: init-контейнер скачивает модель и lookup из S3,
   проверяет SHA256 и версию. API читает общий `emptyDir` без доступа к S3 credentials.
 - `service.yml`: ClusterIP `ecom:8000`; внешний доступ через port-forward.
-- `mlops/grafana/chart`: Helm-chart Prometheus, Loki, Grafana и Alloy без CRD,
-  cluster-wide RBAC и privileged-контейнеров. Alloy читает логи только Pod API
-  в текущем namespace через Kubernetes API.
-- `scripts/deploy_k8s.py`: проверка digest, создание Secrets из окружения, применение
-  манифестов, ожидание rollout, установка Helm-chart, фактические V2 smoke-проверки.
+- `mlops/grafana/chart`: Prometheus, Loki, Grafana, Alloy; без CRD и cluster-wide RBAC.
+- `scripts/deploy_k8s.py`: проверка digest → Secrets → манифесты → rollout → Helm → V2 smoke.
 
-Все контейнеры работают без root и повышения привилегий. ServiceAccount token
-смонтирован только в Alloy, с Role для чтения Pod и их логов. Secret `ecom-s3`
-передаётся только init-контейнеру; `ecom-grafana` содержит пароль интерфейса.
-Образ задаётся по digest, модель — парой `MODEL_VERSION`/`MODEL_MANIFEST_KEY`.
+Контейнеры работают без root и повышения привилегий. Только Alloy получает
+ServiceAccount token и Role для чтения Pod/логов своего namespace; собирает логи API.
+Secret `ecom-s3` доступен только init-контейнеру, `ecom-grafana` — Grafana.
 
-Квота учебного namespace: requests 500m CPU / 4Gi RAM, limits 2 CPU / 8Gi RAM;
-NodePort и LoadBalancer запрещены. Запрошено суммарно 300m CPU и 1664Mi RAM,
-лимиты — 1700m CPU и 3328Mi RAM. Init-контейнер не работает одновременно с API.
-Мониторинг использует три PVC суммарно 4Gi из доступных 5Gi. Prometheus хранит
-до 24 часов или 700MB данных. Развёртывание одной реплики использует Recreate:
-обновление допускает короткий перерыв и не требует ресурса второй реплики.
+Квота: requests 500m CPU / 4Gi, limits 2 CPU / 8Gi; используются 300m / 1664Mi
+и 1700m / 3328Mi соответственно. Три PVC занимают 4Gi из 5Gi.
+Prometheus хранит до 24 часов или 700MB. Одна реплика, Recreate с перерывом;
+NodePort/LoadBalancer запрещены, доступ — port-forward.
 
 ## Локальное развёртывание
 
-Kubeconfig хранится в `.secrets/kubeconfig`, права 600. Нужен доступ только
-к выданному namespace. Совместимые CLI устанавливаются в каталог проекта:
+Kubeconfig: `.secrets/kubeconfig`, права 600, доступ к выданному namespace.
+CLI: kubectl 1.32.1 для сервера 1.32.1, Helm 3.18.6; установщик проверяет SHA256.
 
 ```bash
 sh scripts/install_k8s_tools.sh
@@ -46,14 +39,9 @@ uv run --no-sync python -m scripts.deploy_k8s
 unset GRAFANA_PASSWORD
 ```
 
-`APP_IMAGE` должен указывать на образ с API V2. Текущая развёрнутая пара фиксируется
-в доказательствах проверки. CLI закреплены: kubectl 1.32.1 для сервера 1.32.1,
-Helm 3.18.6; загрузки проверяются по SHA256 официальных релизов.
-
-В GitLab требуются protected Variables `KUBE_CONFIG_B64`, `KUBE_NAMESPACE`,
-`GRAFANA_PASSWORD`; kubeconfig и пароль — masked/hidden. S3 и модель используют
-существующие Variables. Manual job `deploy_k8s` получает digest от `save`, выполняет
-rollout и HTTP-проверки. Job `deploy` сохраняет самостоятельный вариант на ВМ.
+`APP_IMAGE` — digest образа с V2; модель — `MODEL_VERSION`/`MODEL_MANIFEST_KEY`.
+Manual job `deploy_k8s` получает digest от `save`, выполняет rollout и HTTP-проверки.
+CI Variables перечислены в [README](../README.md#cicd).
 
 ## API V2
 
@@ -61,10 +49,8 @@ rollout и HTTP-проверки. Job `deploy` сохраняет самосто
 kubectl port-forward service/ecom 8080:8000
 ```
 
-Если порт 8080 занят, используется `28000:8000` с соответствующей заменой URL.
-В локальном окружении порт 8080 занят другим сервисом.
-Запрос на 8080 проверен через port-forward в изолированном
-сетевом пространстве Docker: [протокол](evidence/k8s-port8080.json).
+При занятом 8080 используется `28000:8000` с заменой URL. Контрольный запрос на 8080
+проверен в изолированном сетевом пространстве Docker: [протокол](evidence/k8s-port8080.json).
 
 В отдельном терминале:
 
@@ -83,18 +69,14 @@ uv run --no-sync python -m scripts.smoke_v2 --url http://127.0.0.1:8080 \
 
 Вход: один тензор `features`, INT64, `[N,3]`, 1 ≤ N ≤ 256; строки содержат
 `itemid, hour UTC, weekday`. Выход: `purchase_probability`, FP64, `[N,1]`.
-`id` возвращается в ответе, если передан. Проверяются форма, длина, типы, диапазоны
-и имя модели. Ошибки V2 имеют поле `error`: 400 для неверного запроса,
-404 для неизвестных модели/товара, 503 для неготовой модели.
+Переданный `id` возвращается в ответе. Проверяются форма, длина, типы, диапазоны и имя модели.
+Ошибки с полем `error`: 400 — ввод, 404 — модель/товар, 503 — модель не готова.
 
 [HTTP V2](https://kserve.github.io/website/docs/concepts/architecture/data-plane/v2-protocol)
-предусматривает POST для инференса. GET `/v2/models/ecom/infer` — дополнительная
-совместимость с примером задания: без параметров обрабатывается контрольная строка
-`356475,14,3`; параметры `itemid`, `hour`, `weekday` могут быть заданы в query.
-Оба метода используют одну модель; GET является расширением стандартного HTTP V2.
-Реализованы HTTP health, metadata и inference; gRPC, бинарные расширения и выбор
-версии модели в URL не реализованы. Одновременно обслуживается одна версия.
-Прежние `/predict_purchase`, `/health`, `/docs`, `/metrics` сохраняются.
+использует POST. GET — расширение для примера задания: по умолчанию `356475,14,3`,
+либо `itemid`, `hour`, `weekday` из query. Оба метода вызывают одну модель.
+Доступны health, metadata, inference; gRPC, binary и выбор версии в URL не реализованы.
+Обслуживается одна версия; `/predict_purchase`, `/health`, `/docs`, `/metrics` сохранены.
 
 ## Мониторинг
 
@@ -113,28 +95,17 @@ uv run --no-sync python -m scripts.verify_monitoring \
   --password-file .secrets/grafana_password --output docs/evidence/k8s-monitoring.json
 ```
 
-Дашборд `http://127.0.0.1:23000/d/ecom` показывает доступность, RPS, latency,
-ошибки, распределение вероятностей и логи. Пароль находится в приватном файле.
-Конфиги dashboard/alerts/Loki в chart соответствуют варианту на ВМ; после изменения
-исходных конфигов требуется обновление копий в `mlops/grafana/chart/files`.
+Дашборд: `http://127.0.0.1:23000/d/ecom`; пароль — `.secrets/grafana_password`.
+Конфиги dashboard/alerts/Loki копируются из варианта на ВМ в `mlops/grafana/chart/files`;
+их соответствие проверяет CI job `test_alerts`.
 
-Для контролируемой проверки недоступности Deployment временно масштабируется в 0,
-после firing `EcomUnavailable` возвращается в 1. Port-forward API после замены Pod
-запускается заново. Обязательна проверка readiness, прогноза и снятия алерта.
-Удаление PVC не требуется. Loki и Prometheus сохраняют историю на PVC.
+Проверка алерта: scale 0 → firing `EcomUnavailable` → scale 1 → readiness/resolved.
+После замены Pod нужен новый port-forward API и повтор smoke; PVC сохраняются.
 
 ```bash
 uv run --no-sync python -m scripts.check_k8s_alert
 ```
 
-Дополнительно `mlops/deploy/alerts-test.yml` проверяет firing/resolved для
-недоступности, 5xx и высокой задержки на синтетических временных рядах.
-Проверка выполняется `promtool` в CI job `test_alerts`.
-
-## Границы проверки
-
-Онлайн-точность не вычисляется без фактических покупок. Offline AP/log loss/Brier
-сохраняются в manifest модели. Kubernetes не устраняет ограничения исторического
-датасета и фиксированного каталога. Namespace и доступы имеют ограниченный срок жизни.
-Возобновление ресурсов доступно в учебном тренажёре. Секреты, kubeconfig и модель
-не входят в Git.
+Недоступность, 5xx и p95 дополнительно проверяет `promtool` в `test_alerts`.
+Namespace имеет ограниченный срок жизни. Качество модели и границы проверки —
+в [отчёте](report.md#ограничения).

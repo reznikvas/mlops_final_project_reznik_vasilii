@@ -5,18 +5,12 @@
 Выход: `purchase_probability` из `CatBoostClassifier.predict_proba` и версия модели.
 Это оценка по товару и времени, без персональных признаков посетителя.
 
-Фактический результат: test AP **0,0243904** при baseline **0,0111961**;
-цепочка на ВМ и дополнительный Kubernetes проверены, включая остановку API
-и снятие алерта. Восстановление Airflow/ClearML проверено на новых volumes.
-Версии, метрики и ограничения: [итоговый отчёт](docs/report.md).
-Соответствие требованиям: [docs/checklist.md](docs/checklist.md).
-Текущие адреса, повторный запуск и резервные копии: [эксплуатация](docs/operations.md).
-Фактические результаты сохраняются в [docs/evidence](docs/evidence).
-Удалённый [pipeline №11202](https://mlops.gitlab.yandexcloud.net/s87443/mlops_final_project_reznik_vasilii/-/pipelines/11202):
-все восемь jobs — **success**, включая `test_alerts`, `deploy` и `deploy_k8s`.
-Один образ по digest и одна версия модели развёрнуты на ВМ и в Kubernetes.
-Проверены V2, Helm-мониторинг, замена Pod и повторная загрузка модели из S3.
-Ссылка на репозиторий: [docs/submission.md](docs/submission.md).
+Test AP **0,0243904**, baseline **0,0111961**. На ВМ и в Kubernetes проверены
+инференс, мониторинг и восстановление. [Pipeline №11202](https://mlops.gitlab.yandexcloud.net/s87443/mlops_final_project_reznik_vasilii/-/pipelines/11202): 8 jobs **success**.
+
+[Результаты и версии](docs/report.md) · [Чек-лист](docs/checklist.md) ·
+[Эксплуатация](docs/operations.md) · [Kubernetes](docs/kubernetes.md) ·
+[Репозиторий](docs/submission.md). Протоколы и скриншоты — в [docs/evidence](docs/evidence).
 
 ## Структура
 
@@ -57,30 +51,24 @@ Unit-тесты не требуют S3, Airflow, ClearML или файла об�
 `item_properties_part1.csv`, `item_properties_part2.csv`. Две части свойств объединяются.
 Сырые данные не хранятся в этом Git-репозитории.
 
-Один уникальный просмотр — одна строка. Target равен 1, если есть покупка того же
-товара тем же посетителем **строго после** просмотра и не позже 24 часов.
-Последние 24 часа наблюдений исключены: исход ещё не наблюдаем полностью.
-Ближайшая последующая покупка ищется через `merge_asof`, без размножения строк.
+Один уникальный просмотр — одна строка. Target = 1 при покупке того же товара
+тем же посетителем **строго после** просмотра и в пределах 24 часов.
+Последние 24 часа наблюдений исключены. `merge_asof` находит ближайшую покупку
+без размножения строк.
 
 Первые 20% временного диапазона — история для признаков; 20–60% — train,
 60–80% — validation, 80–100% — test. Перед границами train/validation исключаются
 24 часа, чтобы окна target не пересекали следующую выборку. Seed: 42.
 
-Снимок признаков фиксируется **до train** и одинаков для train, validation, test и API.
-Признаки: исторические `views`, `purchases`, отношение `ctr`, `hour`, `weekday`,
-`categoryid`, `available`. Свойства выбираются по timestamp из обеих частей.
+Общий для обучения и API снимок фиксируется **до train**. Признаки: `views`,
+`purchases`, `ctr`, `hour`, `weekday`, `categoryid`, `available`. Свойства выбираются
+по timestamp из обеих частей; неизвестная категория/доступность — -1.
 `ctr` — отношение исторических покупок к просмотрам, а не вероятность API.
-Неизвестная категория/доступность: -1. Каталог включает только известные на дату
-снимка товары; будущие неизвестные товары исключены из offline-оценки и дают 404 в API.
-Это предотвращает использование будущих признаков, но ограничивает охват и допускает
-устаревание lookup. Динамические признаки и cold-start требуют следующей версии.
+Товары вне снимка исключены из offline-оценки и дают 404 в API; каталог не обновляется.
 
-Метрика выбора — **Average Precision**, ступенчатая оценка площади PR-кривой:
-покупки редки, ROC-AUC менее наглядна для этой задачи.
-Сравниваются три фиксированные конфигурации по одной validation AP;
-test используется только для финальной оценки выбранной модели. Дополнительно
-измеряются log loss и Brier, с константной вероятностью train как baseline.
-Калибровка оценивается на отложенном test.
+Три конфигурации сравниваются по validation **Average Precision** (AP): PR-метрика
+подходит для редких покупок. Test используется только для финальной оценки
+победителя: AP, log loss, Brier и калибровка. Baseline — частота покупок на train.
 
 ```bash
 uv run python prepare_features.py --raw /путь/к/четырём/csv
@@ -106,18 +94,16 @@ uv run python prepare_features.py --raw-manifest "$RAW_MANIFEST_KEY" --upload
 uv run python train_model.py --upload
 ```
 
-Команда загрузки печатает ключ manifest; его значение записывается в `RAW_MANIFEST_KEY`.
-Структура: `raw_data/<version>/`, `processed_data/<version>/`,
-`models/<version>/` под общим префиксом. Manifest публикуется последним,
-содержит SHA256 файлов, версию схемы, параметры, происхождение и границы выборок.
-Версия processed зависит от исходных SHA256, рецепта, кода и библиотек.
-Каждое скачивание проверяет SHA256. Повторная обработка тех же входов воспроизводима.
-`ranker.pkl` содержит классификатор; загружать pickle допустимо только из доверенного
-проектного S3. Lookup и модель проверяются вместе до готовности API.
+Выведенный ключ manifest задаётся в `RAW_MANIFEST_KEY`. Под проектным префиксом:
+`raw_data/<version>/`, `processed_data/<version>/`, `models/<version>/`.
+Manifest публикуется последним: SHA256, схема, параметры, происхождение и границы
+выборок. Версия processed зависит от входов, рецепта, кода и библиотек.
+При скачивании проверяются SHA256; модель `ranker.pkl` и lookup загружаются одной
+версией до готовности API. Pickle допустим только из доверенного проектного S3.
 
 ## Airflow
 
-Используется Airflow **2.11.0**, LocalExecutor и PostgreSQL; команды относятся к ветке v2.
+Airflow **2.11.0**, LocalExecutor, PostgreSQL.
 Файл `.secrets/services.env` содержит: `AIRFLOW_DB_PASSWORD`, `AIRFLOW_FERNET_KEY`
 (Fernet, 32 случайных байта в urlsafe base64), `AIRFLOW_WEB_SECRET`, `GRAFANA_PASSWORD`.
 
@@ -139,9 +125,8 @@ docker compose --env-file .secrets/services.env -f mlops/airflow/docker-compose.
   airflow dags trigger preprocessing_data --conf "{\"raw_manifest\":\"$RAW_MANIFEST_KEY\"}"
 ```
 
-DAG скачивает raw, проверяет данные, вызывает общую `src.data.prepare`, загружает
-processed и manifest. XCom содержит ключ manifest, а не таблицы. Один активный run,
-повтор после сбоя безопасен: те же входы формируют тот же префикс.
+DAG: S3 raw → валидация → `src.data.prepare` → S3 processed и manifest.
+XCom содержит ключ manifest. Один активный run; те же входы дают тот же префикс.
 
 ## ClearML
 
@@ -154,12 +139,11 @@ PYTHONPATH="$PWD" uv run python -m mlops.clearml.clearml_pipeline \
   --processed-manifest "$PROCESSED_MANIFEST_KEY"
 ```
 
-Вход pipeline — manifest **успешного Airflow run**. Pipeline скачивает одну processed-версию,
-последовательно обучает три модели, выбирает максимальную validation AP,
-оценивает победителя на test и публикует модель с lookup и manifest в S3.
-Режим local mode регистрирует задачи на сервере ClearML и запускает шаги
-локальными подпроцессами. Автоматическое определение Git-репозитория отключено.
-Документация режима: https://clear.ml/docs/latest/docs/references/sdk/automation_controller_pipelinedecorator/.
+`PROCESSED_MANIFEST_KEY` — manifest успешного Airflow run. Из одной processed-версии
+обучаются три модели; победитель по validation AP оценивается на test и публикуется
+в S3 с lookup и manifest. [Local mode](https://clear.ml/docs/latest/docs/references/sdk/automation_controller_pipelinedecorator/)
+запускает шаги подпроцессами и регистрирует задачи на сервере; определение Git repo отключено.
+Запуск проектного ClearML — в [инструкции эксплуатации](docs/operations.md).
 
 ## Docker и ВМ
 
@@ -177,10 +161,9 @@ curl -f http://127.0.0.1:8000/health
 curl -f 'http://127.0.0.1:8000/predict_purchase?itemid=356475&hour=14&weekday=3'
 ```
 
-`model-init` скачивает модель отдельно от образа. У каждой версии свой volume;
-API получает его read-only, без S3-ключей, загружает модель один раз на процесс.
-Контейнер работает от непривилегированного пользователя. Health возвращает 503,
-пока модель не загружена. Для локальной доставки без Registry:
+`model-init` скачивает модель в volume её версии. API работает без root и S3-ключей,
+читает volume read-only, загружает модель один раз на процесс; до загрузки health = 503.
+Доставка образа без Registry:
 
 ```bash
 docker save ecom-purchase:local | gzip > .artifacts/ecom-image.tar.gz
@@ -195,11 +178,10 @@ ssh ubuntu@VM 'gzip -dc ~/ecom-image.tar.gz | sudo docker load'
 
 ## Мониторинг и негативные проверки
 
-`/metrics`: счётчики запросов/статусов, histogram задержки и вероятности, готовность.
-Prometheus опрашивает API каждые 10 секунд. Grafana получает provisioned dashboard
-`ecom`. Alloy доставляет stdout/stderr только контейнера `ecom-api` в Loki.
-Логи прогнозов содержат itemid, вероятность и версию модели, ошибки — тип и статус.
-Метрики не используют itemid как label, чтобы избежать неограниченного числа рядов.
+`/metrics` экспортирует запросы/статусы, задержку, распределение вероятности и готовность.
+Prometheus опрашивает API каждые 10 с; Grafana использует dashboard `ecom`.
+Alloy отправляет stdout/stderr `ecom-api` в Loki: itemid, вероятность, версия модели;
+для ошибок — тип и статус. Itemid не используется в labels метрик.
 
 Интерфейсы привязаны к loopback ВМ: Grafana 3000, Prometheus 9090, Loki 3100.
 Доступ через SSH `-L`. Пароль Grafana хранится в приватном env.
@@ -222,17 +204,11 @@ uv run python -m scripts.verify_monitoring --password-file .secrets/grafana_pass
 uv run python -m scripts.check_alert
 ```
 
-Мониторинговая проверка создаёт 120 прогнозов и проверяет реальные ряды/логи.
-`check_alert` использует SSH-конфигурацию `.secrets/ssh_config`, хост `course-vm`.
-
-Контролируемая проверка алерта: остановка только `api` через Compose, ожидание
-`EcomUnavailable` в `/api/v1/alerts`, затем `compose start api`. Условия восстановления:
-health=200 и отсутствие firing. Команда `down -v` удаляет накопленные данные
-и не используется для этой проверки.
-Распределение вероятностей выявляет изменение поведения, но **не измеряет точность**.
-Без связки прогноз → фактический исход онлайн AP/Brier недоступны; offline-качество
-фиксируется в manifest. Исторические данные 2015 года не доказывают качество на
-современном трафике.
+Проверка мониторинга создаёт 120 прогнозов и проверяет метрики/логи.
+`check_alert` через `.secrets/ssh_config`, хост `course-vm`, останавливает API,
+ожидает firing, запускает API и проверяет health = 200 и resolved. Volumes сохраняются;
+`down -v` не используется. Score distribution **не измеряет точность**: онлайн
+AP/Brier требуют фактических покупок. Offline-качество хранится в manifest.
 
 Для проверки правил алертинга на синтетических рядах:
 
@@ -243,14 +219,12 @@ docker run --rm --entrypoint promtool -v "$PWD/mlops/deploy:/checks:ro" \
 
 ## CI/CD
 
-Стадии: `lint`, `formating`, `test`, `build`, `save`, `deploy`. Восемь jobs включают
-отдельные `test_alerts` и `deploy_k8s`. Black запускается с
-`--check`. BuildKit rootless публикует образ в Registry с временным тегом
-`build-<pipeline-id>`; digest передаётся небольшим `build-metadata.json` artifact.
-Stage save через Skopeo публикует тот же digest с тегом commit SHA
-(`--preserve-digests`), без Docker daemon. Это исключает зависимость от размера
-GitLab artifacts. Датасеты и tar-архивы в Git не загружаются. Deploy использует
-immutable digest и явно выбранную версию модели. Деплой manual на основной ветке.
+Стадии: `lint`, `formating`, `test`, `build`, `save`, `deploy`; 8 jobs, включая
+`test_alerts` и `deploy_k8s`. Black работает с `--check`.
+BuildKit rootless публикует `build-<pipeline-id>` в Registry; artifact
+`build-metadata.json` передаёт digest. Skopeo в `save` сохраняет тот же образ
+под commit SHA (`--preserve-digests`). Manual deploy на основной ветке использует
+immutable digest и выбранную версию модели. Образы, датасеты и модели не входят в Git.
 
 В GitLab требуются masked/hidden Variables: `SSH_PRIVATE_KEY_B64`,
 `SSH_KNOWN_HOSTS_B64` (проверенный host key), `AWS_ACCESS_KEY_ID`,
@@ -260,19 +234,9 @@ Base64 нужен для совместимости маскирования м�
 Protected Variables требуют protected основной ветки. Registry credentials в save
 предоставляет GitLab. На ВМ требуются файлы `~/ecom-secrets/s3.env`,
 `~/ecom-secrets/monitoring.env` (с `GRAFANA_PASSWORD`).
-Deploy передаёт короткоживущий `CI_REGISTRY_PASSWORD` через SSH stdin;
-`scripts/deploy_on_vm.sh` использует временный Docker config и удаляет его после
-завершения. Постоянный Registry token на ВМ не требуется.
-S3-ключи хранятся в masked/hidden Variables для операций с данными;
-init на ВМ использует свой приватный файл. Временные Registry-теги `build-*`
-можно удалять после проверки соответствующего commit-тега.
+Deploy передаёт `CI_REGISTRY_PASSWORD` через SSH stdin и удаляет временный Docker
+config после завершения. S3-init на ВМ использует приватный env-файл.
 
-Учебный Runner принимает только jobs с тегом `k8s`; он указан в `default.tags`.
-DinD на выданном Runner недоступен; используется BuildKit rootless по
-[инструкции GitLab](https://docs.gitlab.com/ci/docker/using_buildkit/).
+Runner требует тег `k8s`; DinD недоступен. Сборка — [BuildKit rootless](https://docs.gitlab.com/ci/docker/using_buildkit/).
 Для Kubernetes дополнительно используются protected Variables `KUBE_CONFIG_B64`,
 `KUBE_NAMESPACE`, `GRAFANA_PASSWORD`; kubeconfig и пароль — masked/hidden.
-
-Результаты проверок и ограничения — в [docs/report.md](docs/report.md).
-
-Дополнительный Kubernetes: [Deployment/Service, API V2 и Helm-мониторинг](docs/kubernetes.md).

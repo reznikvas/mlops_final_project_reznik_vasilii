@@ -1,14 +1,10 @@
 # Итог проверки, 06.10.2026
 
-Варианты на ВМ и в Kubernetes реализованы и проверены. Цепочка обработки:
-полные CSV в S3 → Airflow → processed в S3 → ClearML → модель в S3 →
-Docker Compose на ВМ / Deployment в Kubernetes → прогноз → Prometheus/Grafana/Loki →
-алерт и восстановление.
-Код и артефакты проверки опубликованы в GitLab. Удалённый
-[pipeline №11202](https://mlops.gitlab.yandexcloud.net/s87443/mlops_final_project_reznik_vasilii/-/pipelines/11202)
-прошёл все шесть стадий: `lint`, `formating`, `test`, `build`, `save`, `deploy`.
-06.10.2026 jobs 66164 и 66165 развернули одну пару image/model на ВМ
-и в Kubernetes. Все восемь jobs, включая `test_alerts`, завершились успешно.
+Проверена цепочка S3 raw → Airflow → S3 processed → ClearML → S3 model →
+инференс на ВМ/Kubernetes → мониторинг и восстановление.
+[Pipeline №11202](https://mlops.gitlab.yandexcloud.net/s87443/mlops_final_project_reznik_vasilii/-/pipelines/11202):
+все 8 jobs успешны; на ВМ и в Kubernetes развёрнута одна пара image/model.
+Результаты по требованиям и ссылки на протоколы — в [чек-листе](checklist.md).
 
 ## Финальные версии
 
@@ -58,99 +54,25 @@ Test используется только для финальной оценк�
 Данные 2015 года, неизвестные товары и устаревание снимка ограничивают применение
 на современном трафике. Мониторинг score не заменяет измерение качества по исходам.
 
-## Фактически проверенные сценарии
+## Дополнительные результаты
 
-- Исходные скрипты подготовки и обучения выполнены в отдельной копии;
-  исходный репозиторий не изменён. Найдены утечка будущей популярности, только part1,
-  размножение просмотров соединением и отсутствие отложенной оценки.
-- Финальные Parquet локального ПК Debian и Airflow на Ubuntu побайтово совпадают.
-  Повтор финального DAG дал те же SHA256. В XCom передаётся ключ manifest.
-- Два ClearML pipeline завершились, всего 12 задач в `completed`.
-  Каждый содержит загрузку processed, три эксперимента и публикацию победителя.
-- 29 изолированных unit-тестов; ruff, black --check и mypy — без ошибок.
-  Есть upstream DeprecationWarning Starlette/AnyIO; он не влияет на результаты.
-- Локальный порт 32000 и ВМ:8000: docs/health/прогноз — 200, неизвестный товар — 404,
-  неверный ввод — 422; отсутствие модели — 503 в unit-тесте.
-- Внешний запрос к ВМ для `itemid=356475&hour=14&weekday=3` вернул 200,
-  вероятность **0,014421234235027114**, финальную версию модели.
-- Модель скачана model-init из S3; API не содержит S3 credentials, volume read-only.
-  SHA256 и совпадение версии проверяются до загрузки pickle.
-- Реальный трафик дал ненулевые RPS/latency/score ряды и прогнозы в Loki.
-  Grafana provisioned dashboard содержит 8 панелей.
-- Проверка ВМ: firing 2026-10-06T17:06:08.162922+00:00;
-  health=200, resolved 2026-10-06T17:06:28.648816+00:00. Протокол — `evidence/alert-recovery.json`.
-- Образ собран локально BuildKit, доставлен по SSH и загружен на ВМ.
-  Архив, rootfs и runtime config совпали. Разные image ID вызваны форматами
-  Docker 29 containerd image store и Docker 24 classic.
-
-- HTTP V2: 11 сценариев с обученной моделью на ПК, ВМ и Kubernetes; GET/POST,
-  health/metadata, 400/404, совпадение с `/predict_purchase`. Отсутствие модели
-  и ошибочные тензоры проверены изолированными тестами.
-- Kubernetes: init-container exit 0, модель read-only для API, S3 Secret только
-  у init-контейнера. Пять готовых Pod, три Bound PVC; requests 300m CPU/1664Mi.
-- Helm-chart мониторинга установлен; новые прогнозы видны в Loki, метрики —
-  в Prometheus, все восемь панелей — в Grafana. [Дашборд](evidence/k8s-grafana.png).
-- Остановка Deployment дала firing, новый Pod повторно скачал модель из S3,
-  readiness восстановилась, алерт снялся: [протокол](evidence/k8s-recovery.json).
-- Все три правила алертов проходят firing/resolved на синтетических рядах
-  через promtool: [лог](evidence/alert-rules-tests.txt).
-- Airflow/ClearML восстановлены из архивов в отдельные пустые volumes на существующей
-  ВМ. Проверены 5 DAG runs, Fernet Connection, 12 completed задач и SHA256 четырёх
-  файлов артефактов. Временные контейнеры и volumes удалены. [Протокол](evidence/backup-restore.json).
-
-## Конфигурация и эксплуатационные особенности
-
-1. Для одинаковых timestamp задан канонический порядок по времени, visitorid и itemid.
-   До исправления порядок равных ключей и SHA256 различались на ПК/ВМ. Финальное
-   обучение повторено; прежние результаты сохранены как промежуточные.
-   Гиперпараметры по test не менялись.
-2. Проектный ClearML Server 2.4.0 использует отдельную конфигурацию и credentials.
-   Порты привязаны к loopback, доступ — через SSH. Pipeline работает в local mode:
-   шаги выполняются локальными подпроцессами с регистрацией задач на сервере.
-3. Airflow 2.11.0, PostgreSQL, LocalExecutor. После пересборки потребовался
-   `--force-recreate airflow`; SHA256 кода проверен внутри контейнера.
-4. Логи доставляет Alloy. Для тестового браузера установлен locale `en-US`:
-   системный `en-US@posix` вызывал ошибку frontend Grafana.
-5. На Runner нужен тег `k8s`; Docker daemon для DinD недоступен. Финальная сборка
-   использует BuildKit rootless. Между build/save передаётся digest опубликованного
-   временного Registry-тега, Skopeo сохраняет его под commit SHA без пересборки.
-   В GitLab artifacts передаётся только маленький JSON, поэтому лимит размера
-   не затрагивает Docker-образ. Датасеты и модели в Git не добавлялись.
-6. Тест SHA256 изолирован от внешнего MODEL_VERSION через monkeypatch.
-   Набор из 29 тестов прошёл на Runner: [результаты CI](evidence/ci-tests.json).
-7. После возобновления ВМ PostgreSQL Airflow не стартовал автоматически: добавлен
-   restart unless-stopped. Docker-журнал API содержал 262 нулевых байта, что мешало
-   Alloy читать новые записи. Журнал сохранён приватно, API пересоздан с прежней
-   моделью; повторная доставка новых прогнозов в Loki проверена.
-8. После возобновления 06.10.2026 webserver Airflow завершился по таймауту старта.
-   Контейнер перезапущен, metadatabase/scheduler/triggerer healthy. Проверка после TTL
-   включает HTTP health и состояние контейнеров. S3 и завершённый
-   ClearML pipeline доступны: [протокол](evidence/resources-20261006.json).
-
-9. Восстановление выявило старт fileserver до готовности ClearML API. Добавлен
-   healthcheck apiserver и `depends_on: service_healthy`; запуск проверен на ВМ.
-10. Нативный Kubernetes выбран в пределах namespace-квоты. Helm-chart разворачивает
-    Prometheus/Grafana/Loki/Alloy без CRD и cluster-wide RBAC. KServe является
-    альтернативой из задания и одновременно с нативным вариантом не требуется.
-11. Стандартный HTTP V2 использует POST; GET-пример задания реализован как отдельная
-    совместимость с контрольными параметрами. На ПК занятой порт 8080 сохранён;
-    рабочий port-forward — 28000, точный запрос на 8080 проверен в изолированном
-    Docker network namespace. [Протокол](evidence/k8s-port8080.json).
+- 29 unit-тестов и ruff/black/mypy — без ошибок; сохранён upstream
+  DeprecationWarning Starlette/AnyIO. [Результаты CI](evidence/ci-tests.json).
+- Прогноз для `356475,14,3`: **0,014421234235027114**. По 11 HTTP-сценариев V2
+  на ПК, ВМ и Kubernetes: [ПК](evidence/local-v2.json), [ВМ](evidence/vm-v2.json),
+  [Kubernetes](evidence/k8s-api.json).
+- Airflow/ClearML восстановлены в пустые volumes на существующей ВМ:
+  5 DAG runs, 12 completed задач, Fernet Connection и SHA256 четырёх артефактов.
+  [Протокол](evidence/backup-restore.json). Временные контейнеры и volumes удалены.
 
 ## Ограничения
 
-- В GitLab настроены 12 Variables; секреты masked/hidden/protected. Отдельный
-  SSH-ключ CI действует до 05.11.2026 23:59:59 по Белграду; forwarding запрещён.
-  Вход и запрет проверены; deploy выполнен GitLab Runner.
-  Используется короткоживущий Registry token; Runner работает без privileged-режима.
-- Kubernetes работает с одной репликой и стратегией Recreate; обновление допускает
-  перерыв. NodePort/LoadBalancer запрещены квотой, доступ — через port-forward.
-  Это учебное развёртывание без HA, публичного ingress и промышленного SLA.
-- Алерты видны в Prometheus/Grafana; внешние email/мессенджер-уведомления не настроены.
-- Срок жизни учебной ВМ — до 5 часов. Результаты и резервные копии сохранены вне ВМ.
-- Приватные копии ClearML и Airflow находятся в `.artifacts/backups/`, права 600,
-  исключены из Git. Восстановление проверено в новых volumes на существующей ВМ;
-  автоматическое создание новой ВМ не тестировалось. См. [эксплуатацию](operations.md).
-- Локальный API использует порт 32000. Доступ к интерфейсам ВМ требует работающих
-  SSH-туннелей и доступной ВМ.
-- Ссылка на репозиторий: [submission.md](submission.md).
+- Фиксированный каталог 2015 года без персонализации; неизвестные товары дают 404.
+  Онлайн-качество без фактических покупок не измеряется.
+- Одна реплика Kubernetes, Recreate с перерывом, доступ через port-forward;
+  нет HA, публичного ingress, TLS/API-auth и промышленного SLA.
+- Алерты доступны в Prometheus/Grafana; внешняя рассылка не настроена.
+- TTL ВМ — 5 часов. Резервные копии сохранены вне ВМ; восстановление проверено
+  на существующей ВМ, создание новой ВМ отдельно не тестировалось.
+
+Доступы, обновление и восстановление: [operations.md](operations.md).
