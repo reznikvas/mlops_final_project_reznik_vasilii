@@ -1,0 +1,97 @@
+{
+  "checked_at": "2026-10-06T16:41:36.621929+00:00",
+  "scope": "isolated new Docker volumes on existing VM; production volumes unchanged",
+  "archives": {
+    "airflow.sql.gz": "38e4b783e1bfe550cc2ae3ab27dbeff8dd4c0bc240e1d1afdd7580fbffe9b9c7",
+    "clearml-volumes.tar.gz": "caf3652bdae62facd72a2d084add7514f7d2041098f45c976e0c29627fb5deac"
+  },
+  "airflow_health": {
+    "dag_processor": {
+      "latest_dag_processor_heartbeat": null,
+      "status": null
+    },
+    "metadatabase": {
+      "status": "healthy"
+    },
+    "scheduler": {
+      "latest_scheduler_heartbeat": "2026-10-06T16:41:34.171383+00:00",
+      "status": "healthy"
+    },
+    "triggerer": {
+      "latest_triggerer_heartbeat": "2026-10-06T16:41:34.518043+00:00",
+      "status": "healthy"
+    }
+  },
+  "clearml_tasks": [
+    {
+      "id": "f5add09a07ad4ba8a707776a3bf43482",
+      "name": "Ecom CatBoost selection",
+      "status": "completed"
+    },
+    {
+      "id": "2ae6bc87719e4e62a57f6584a0484fdc",
+      "name": "Ecom CatBoost selection #2",
+      "status": "completed"
+    },
+    {
+      "id": "e6cbaa9e9631438cb8456e47fad19bf1",
+      "name": "fetch_processed",
+      "status": "completed"
+    },
+    {
+      "id": "614f2e961e0c43389443c39117017f1d",
+      "name": "fetch_processed",
+      "status": "completed"
+    },
+    {
+      "id": "fd9a37b65c8a4a4a8114eda6e5694720",
+      "name": "publish_winner",
+      "status": "completed"
+    },
+    {
+      "id": "cf073f5d860a41408517ad492624d009",
+      "name": "publish_winner",
+      "status": "completed"
+    },
+    {
+      "id": "4dda161d3c744a019364dca19db1ecc9",
+      "name": "train_candidate",
+      "status": "completed"
+    },
+    {
+      "id": "ac42e27c10ba48748778e85a9fcccc29",
+      "name": "train_candidate",
+      "status": "completed"
+    },
+    {
+      "id": "6a0590eb9aca4a9f9b0ca12576f010aa",
+      "name": "train_candidate",
+      "status": "completed"
+    },
+    {
+      "id": "c0740dfacd534ef4ab11c0327a0537dc",
+      "name": "train_candidate",
+      "status": "completed"
+    },
+    {
+      "id": "b3988213e07647b796f4a875da44d16e",
+      "name": "train_candidate",
+      "status": "completed"
+    },
+    {
+      "id": "bff85432eb71435db726e505eda1cecd",
+      "name": "train_candidate",
+      "status": "completed"
+    }
+  ],
+  "airflow_runs": [
+    "ecom-20261005:success",
+    "ecom-final-20261005:success",
+    "ecom-final-replay-20261005:success",
+    "ecom-replay-20261005:success",
+    "ecom-stable-20261005:success"
+  ],
+  "airflow_fernet_connection": "decrypted successfully; secret not exported",
+  "clearml_artifact_files_verified": 4,
+  "result": "passed"
+}

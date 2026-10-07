@@ -1,0 +1,99 @@
+{{- range $name, $config := .Values.components }}
+---
+{{- if $config.storage }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ $.Release.Name }}-{{ $name }}
+spec:
+  accessModes: [ReadWriteOnce]
+  resources:
+    requests:
+      storage: {{ $config.storage }}
+---
+{{- end }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ $.Release.Name }}-{{ $name }}
+spec:
+  replicas: 1
+  strategy: {type: Recreate}
+  selector:
+    matchLabels: {app: {{ $.Release.Name }}-{{ $name }}}
+  template:
+    metadata:
+      labels: {app: {{ $.Release.Name }}-{{ $name }}}
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") $ | sha256sum }}
+    spec:
+      automountServiceAccountToken: {{ eq $name "alloy" }}
+      {{- if eq $name "alloy" }}
+      serviceAccountName: {{ $.Release.Name }}-alloy
+      {{- end }}
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: {{ $config.uid }}
+        fsGroup: 10001
+        seccompProfile: {type: RuntimeDefault}
+      containers:
+        - name: {{ $name }}
+          image: {{ $config.image }}
+          {{- with $config.args }}
+          args: {{ toJson . }}
+          {{- end }}
+          ports: [{name: http, containerPort: {{ $config.port }}}]
+          resources:
+{{ toYaml $config.resources | indent 12 }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: {drop: [ALL]}
+          {{- if eq $name "grafana" }}
+          env:
+            - name: GF_SECURITY_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef: {name: {{ $.Values.grafanaSecret }}, key: password}
+            - {name: GF_USERS_ALLOW_SIGN_UP, value: "false"}
+            - {name: GF_ANALYTICS_REPORTING_ENABLED, value: "false"}
+          {{- end }}
+          readinessProbe:
+            httpGet: {path: {{ $config.health }}, port: http}
+            periodSeconds: 5
+          livenessProbe:
+            httpGet: {path: {{ $config.health }}, port: http}
+            initialDelaySeconds: 120
+            periodSeconds: 20
+            failureThreshold: 6
+          volumeMounts:
+            - {name: config, mountPath: {{ $config.configPath }}, subPath: {{ $config.configName }}, readOnly: true}
+            - {name: data, mountPath: {{ $config.dataPath }}}
+            - {name: tmp, mountPath: /tmp}
+            {{- if eq $name "prometheus" }}
+            - {name: config, mountPath: /etc/prometheus/alerts.yml, subPath: alerts.yml, readOnly: true}
+            {{- end }}
+            {{- if eq $name "grafana" }}
+            - {name: config, mountPath: /etc/grafana/provisioning/dashboards/default.yml, subPath: dashboards.yml, readOnly: true}
+            - {name: config, mountPath: /var/lib/grafana/dashboards/ecom.json, subPath: ecom.json, readOnly: true}
+            {{- end }}
+      volumes:
+        - name: config
+          configMap: {name: {{ $.Release.Name }}-config}
+        - name: tmp
+          emptyDir: {sizeLimit: 128Mi}
+        - name: data
+          {{- if $config.storage }}
+          persistentVolumeClaim: {claimName: {{ $.Release.Name }}-{{ $name }}}
+          {{- else }}
+          emptyDir: {sizeLimit: 128Mi}
+          {{- end }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ $.Release.Name }}-{{ $name }}
+spec:
+  type: ClusterIP
+  selector: {app: {{ $.Release.Name }}-{{ $name }}}
+  ports: [{name: http, port: {{ $config.port }}, targetPort: http}]
+{{- end }}

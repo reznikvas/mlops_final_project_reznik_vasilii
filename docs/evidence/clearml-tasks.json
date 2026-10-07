@@ -1,0 +1,2310 @@
+{
+  "tasks": [
+    {
+      "hyperparams": {
+        "kwargs": {
+          "processed_path": {
+            "section": "kwargs",
+            "name": "processed_path",
+            "value": "",
+            "type": "str",
+            "description": ""
+          },
+          "root": {
+            "section": "kwargs",
+            "name": "root",
+            "value": "/home/reznik/PycharmProjects/mlops_final_project_reznik_vasilii/.artifacts/clearml-final",
+            "type": "str",
+            "description": ""
+          },
+          "results": {
+            "section": "kwargs",
+            "name": "results",
+            "value": "",
+            "description": ""
+          }
+        },
+        "kwargs_artifacts": {
+          "processed_path": {
+            "section": "kwargs_artifacts",
+            "name": "processed_path",
+            "value": "614f2e961e0c43389443c39117017f1d.processed_path",
+            "type": "str",
+            "description": ""
+          },
+          "results": {
+            "section": "kwargs_artifacts",
+            "name": "results",
+            "value": "2ae6bc87719e4e62a57f6584a0484fdc.result_publish_winner_results",
+            "type": "str",
+            "description": ""
+          }
+        },
+        "General": {
+          "model_manifest": {
+            "section": "General",
+            "name": "model_manifest",
+            "value": "Reznik_Vasilii_project/models/f21822b6eef45530-9b2c1d2a64cd/manifest.json",
+            "type": "str",
+            "description": ""
+          },
+          "model_version": {
+            "section": "General",
+            "name": "model_version",
+            "value": "f21822b6eef45530-9b2c1d2a64cd",
+            "type": "str",
+            "description": ""
+          }
+        },
+        "return": {
+          "model_manifest": {
+            "section": "return",
+            "name": "model_manifest",
+            "value": "Reznik_Vasilii_project/models/f21822b6eef45530-9b2c1d2a64cd/manifest.json",
+            "type": "str",
+            "description": ""
+          }
+        }
+      },
+      "id": "cf073f5d860a41408517ad492624d009",
+      "last_metrics": {
+        "098f6bcd4621d373cade4e832627b4f6": {
+          "02f2582ad1767730eda32a5232ecde7b": {
+            "metric": "test",
+            "variant": "average_precision",
+            "value": 0.024390395710391363,
+            "min_value": 0.024390395710391363,
+            "min_value_iteration": 0,
+            "max_value": 0.024390395710391363,
+            "max_value_iteration": 0,
+            "first_value": 0.024390395710391363,
+            "first_value_iteration": 0,
+            "count": 1,
+            "mean_value": 0.02
+          },
+          "b1e40cef79f84add16ee3e691b273987": {
+            "metric": "test",
+            "variant": "prevalence",
+            "value": 0.011196103469483023,
+            "min_value": 0.011196103469483023,
+            "min_value_iteration": 0,
+            "max_value": 0.011196103469483023,
+            "max_value_iteration": 0,
+            "first_value": 0.011196103469483023,
+            "first_value_iteration": 0,
+            "count": 1,
+            "mean_value": 0.01
+          },
+          "e114d9151127c0b8971d184ff7bc2aa3": {
+            "metric": "test",
+            "variant": "brier",
+            "value": 0.011021231477578336,
+            "min_value": 0.011021231477578336,
+            "min_value_iteration": 0,
+            "max_value": 0.011021231477578336,
+            "max_value_iteration": 0,
+            "first_value": 0.011021231477578336,
+            "first_value_iteration": 0,
+            "count": 1,
+            "mean_value": 0.01
+          },
+          "f59a676e5023928b98c2b8864e94ee25": {
+            "metric": "test",
+            "variant": "log_loss",
+            "value": 0.05949066079627501,
+            "min_value": 0.05949066079627501,
+            "min_value_iteration": 0,
+            "max_value": 0.05949066079627501,
+            "max_value_iteration": 0,
+            "first_value": 0.05949066079627501,
+            "first_value_iteration": 0,
+            "count": 1,
+            "mean_value": 0.06
+          }
+        }
+      },
+      "name": "publish_winner",
+      "project": "644c7e25596e47b29090f684f5300b31",
+      "status": "completed",
+      "type": "training"
+    },
+    {
+      "hyperparams": {
+        "kwargs": {
+          "processed_path": {
+            "section": "kwargs",
+            "name": "processed_path",
+            "value": "",
+            "type": "str",
+            "description": ""
+          },
+          "root": {
+            "section": "kwargs",
+            "name": "root",
+            "value": "/home/reznik/PycharmProjects/mlops_final_project_reznik_vasilii/.artifacts/clearml-final",
+            "type": "str",
+            "description": ""
+          },
+          "index": {
+            "section": "kwargs",
+            "name": "index",
+            "value": "2",
+            "type": "int",
+            "description": ""
+          }
+        },
+        "kwargs_artifacts": {
+          "processed_path": {
+            "section": "kwargs_artifacts",
+            "name": "processed_path",
+            "value": "614f2e961e0c43389443c39117017f1d.processed_path",
+            "type": "str",
+            "description": ""
+          }
+        },
+        "CatBoost": {
+          "depth": {
+            "section": "CatBoost",
+            "name": "depth",
+            "value": "6",
+            "type": "int",
+            "description": ""
+          },
+          "iterations": {
+            "section": "CatBoost",
+            "name": "iterations",
+            "value": "250",
+            "type": "int",
+            "description": ""
+          },
+          "learning_rate": {
+            "section": "CatBoost",
+            "name": "learning_rate",
+            "value": "0.08",
+            "type": "float",
+            "description": ""
+          },
+          "random_seed": {
+            "section": "CatBoost",
+            "name": "random_seed",
+            "value": "42",
+            "type": "int",
+            "description": ""
+          },
+          "loss_function": {
+            "section": "CatBoost",
+            "name": "loss_function",
+            "value": "Logloss",
+            "type": "str",
+            "description": ""
+          },
+          "thread_count": {
+            "section": "CatBoost",
+            "name": "thread_count",
+            "value": "4",
+            "type": "int",
+            "description": ""
+          },
+          "verbose": {
+            "section": "CatBoost",
+            "name": "verbose",
+            "value": "False",
+            "type": "bool",
+            "description": ""
+          },
+          "allow_writing_files": {
+            "section": "CatBoost",
+            "name": "allow_writing_files",
+            "value": "False",
+            "type": "bool",
+            "description": ""
+          }
+        },
+        "Data": {
+          "processed_version": {
+            "section": "Data",
+            "name": "processed_version",
+            "value": "f21822b6eef45530",
+            "type": "str",
+            "description": ""
+          }
+        },
+        "return": {
+          "result_path": {
+            "section": "return",
+            "name": "result_path",
+            "value": "/home/reznik/PycharmProjects/mlops_final_project_reznik_vasilii/.artifacts/clearml-final/experiments/2/result.json",
+            "type": "str",
+            "description": ""
+          }
+        }
+      },
+      "id": "bff85432eb71435db726e505eda1cecd",
+      "last_metrics": {
+        "339d8d14024f2ae5c8dc2e07362eba1d": {
+          "681f55b8d2d5ba0b91e9cd3bc5d1540a": {
+            "metric": "learn",
+            "variant": "Logloss",
+            "value": 0.06765674367107731,
+            "min_value": 0.06765674367107731,
+            "min_value_iteration": 250,
+            "max_value": 0.5359679459697916,
+            "max_value_iteration": 1,
+            "first_value": 0.5359679459697916,
+            "first_value_iteration": 1,
+            "count": 250,
+            "mean_value": 0.08
+          }
+        },
+        "29c6dd717a649f7c1835bfa9249b3142": {
+          "028d9091618657f296222d768c3dd9b8": {
+            "metric": ":monitor:machine",
+            "variant": "network_rx_mbs",
+            "value": 0.02,
+            "min_value": 0.02,
+            "min_value_iteration": 141,
+            "max_value": 0.02,
+            "max_value_iteration": 141,
+            "first_value": 0.02,
+            "first_value_iteration": 141,
+            "count": 1,
+            "mean_value": 0.02
+          },
+          "1a760266c35f86529f9c669d539a2297": {
+            "metric": ":monitor:machine",
+            "variant": "io_read_mbs",
+            "value": 0.016,
+            "min_value": 0.016,
+            "min_value_iteration": 141,
+            "max_value": 0.016,
+            "max_value_iteration": 141,
+            "first_value": 0.016,
+            "first_value_iteration": 141,
+            "count": 1,
+            "mean_value": 0.02
+          },
+          "22db6a87b76b02b50d0a8c54879484ce": {
+            "metric": ":monitor:machine",
+            "variant": "io_write_mbs",
+            "value": 3.561,
+            "min_value": 3.561,
+            "min_value_iteration": 141,
+            "max_value": 3.561,
+            "max_value_iteration": 141,
+            "first_value": 3.561,
+            "first_value_iteration": 141,
+            "count": 1,
+            "mean_value": 3.56
+          },
+          "3964adf302d5c935e9a2451b45bd53a5": {
+            "metric": ":monitor:machine",
+            "variant": "memory_free_gb",
+            "value": 7.161,
+            "min_value": 7.161,
+            "min_value_iteration": 141,
+            "max_value": 7.161,
+            "max_value_iteration": 141,
+            "first_value": 7.161,
+            "first_value_iteration": 141,
+            "count": 1,
+            "mean_value": 7.16
+          },
+          "5385df90d0d0ad8955159a5307d34b38": {
+            "metric": ":monitor:machine",
+            "variant": "cpu_usage",
+            "value": 94.455,
+            "min_value": 94.455,
+            "min_value_iteration": 141,
+            "max_value": 94.455,
+            "max_value_iteration": 141,
+            "first_value": 94.455,
+            "first_value_iteration": 141,
+            "count": 1,
+            "mean_value": 94.45
+          },
+          "5d2e34a3c7e733e0549fa6d9c9666ce3": {
+            "metric": ":monitor:machine",
+            "variant": "network_tx_mbs",
+            "value": 0.016,
+            "min_value": 0.016,
+            "min_value_iteration": 141,
+            "max_value": 0.016,
+            "max_value_iteration": 141,
+            "first_value": 0.016,
+            "first_value_iteration": 141,
+            "count": 1,
+            "mean_value": 0.02
+          },
+          "7e44abd211aa00a7c3bf5090fb33df90": {
+            "metric": ":monitor:machine",
+            "variant": "memory_used_gb",
+            "value": 0.236,
+            "min_value": 0.236,
+            "min_value_iteration": 141,
+            "max_value": 0.236,
+            "max_value_iteration": 141,
+            "first_value": 0.236,
+            "first_value_iteration": 141,
+            "count": 1,
+            "mean_value": 0.24
+          },
+          "bd04514a2d2b5bd8ae2ec5717ad8e317": {
+            "metric": ":monitor:machine",
+            "variant": "cpu_temperature",
+            "value": 75.847,
+            "min_value": 75.847,
+            "min_value_iteration": 141,
+            "max_value": 75.847,
+            "max_value_iteration": 141,
+            "first_value": 75.847,
+            "first_value_iteration": 141,
+            "count": 1,
+            "mean_value": 75.85
+          },
+          "f4f4fd050d744fb78fc0bb7b5a2a9f99": {
+            "metric": ":monitor:machine",
+            "variant": "disk_free_percent",
+            "value": 39.4,
+            "min_value": 39.4,
+            "min_value_iteration": 141,
+            "max_value": 39.4,
+            "max_value_iteration": 141,
+            "first_value": 39.4,
+            "first_value_iteration": 141,
+            "count": 1,
+            "mean_value": 39.4
+          }
+        },
+        "a617908b172c473cb8e8cda059e55bf0": {
+          "02f2582ad1767730eda32a5232ecde7b": {
+            "metric": "validation",
+            "variant": "average_precision",
+            "value": 0.029330422966353034,
+            "min_value": 0.029330422966353034,
+            "min_value_iteration": 0,
+            "max_value": 0.029330422966353034,
+            "max_value_iteration": 0,
+            "first_value": 0.029330422966353034,
+            "first_value_iteration": 0,
+            "count": 1,
+            "mean_value": 0.03
+          },
+          "b1e40cef79f84add16ee3e691b273987": {
+            "metric": "validation",
+            "variant": "prevalence",
+            "value": 0.011870100297241391,
+            "min_value": 0.011870100297241391,
+            "min_value_iteration": 0,
+            "max_value": 0.011870100297241391,
+            "max_value_iteration": 0,
+            "first_value": 0.011870100297241391,
+            "first_value_iteration": 0,
+            "count": 1,
+            "mean_value": 0.01
+          },
+          "e114d9151127c0b8971d184ff7bc2aa3": {
+            "metric": "validation",
+            "variant": "brier",
+            "value": 0.011642182189362912,
+            "min_value": 0.011642182189362912,
+            "min_value_iteration": 0,
+            "max_value": 0.011642182189362912,
+            "max_value_iteration": 0,
+            "first_value": 0.011642182189362912,
+            "first_value_iteration": 0,
+            "count": 1,
+            "mean_value": 0.01
+          },
+          "f59a676e5023928b98c2b8864e94ee25": {
+            "metric": "validation",
+            "variant": "log_loss",
+            "value": 0.061449975249634026,
+            "min_value": 0.061449975249634026,
+            "min_value_iteration": 0,
+            "max_value": 0.061449975249634026,
+            "max_value_iteration": 0,
+            "first_value": 0.061449975249634026,
+            "first_value_iteration": 0,
+            "count": 1,
+            "mean_value": 0.06
+          }
+        }
+      },
+      "name": "train_candidate",
+      "project": "644c7e25596e47b29090f684f5300b31",
+      "status": "completed",
+      "type": "training"
+    },
+    {
+      "hyperparams": {
+        "kwargs": {
+          "processed_path": {
+            "section": "kwargs",
+            "name": "processed_path",
+            "value": "",
+            "type": "str",
+            "description": ""
+          },
+          "root": {
+            "section": "kwargs",
+            "name": "root",
+            "value": "/home/reznik/PycharmProjects/mlops_final_project_reznik_vasilii/.artifacts/clearml-final",
+            "type": "str",
+            "description": ""
+          },
+          "index": {
+            "section": "kwargs",
+            "name": "index",
+            "value": "1",
+            "type": "int",
+            "description": ""
+          }
+        },
+        "kwargs_artifacts": {
+          "processed_path": {
+            "section": "kwargs_artifacts",
+            "name": "processed_path",
+            "value": "614f2e961e0c43389443c39117017f1d.processed_path",
+            "type": "str",
+            "description": ""
+          }
+        },
+        "CatBoost": {
+          "depth": {
+            "section": "CatBoost",
+            "name": "depth",
+            "value": "5",
+            "type": "int",
+            "description": ""
+          },
+          "iterations": {
+            "section": "CatBoost",
+            "name": "iterations",
+            "value": "300",
+            "type": "int",
+            "description": ""
+          },
+          "learning_rate": {
+            "section": "CatBoost",
+            "name": "learning_rate",
+            "value": "0.06",
+            "type": "float",
+            "description": ""
+          },
+          "random_seed": {
+            "section": "CatBoost",
+            "name": "random_seed",
+            "value": "42",
+            "type": "int",
+            "description": ""
+          },
+          "loss_function": {
+            "section": "CatBoost",
+            "name": "loss_function",
+            "value": "Logloss",
+            "type": "str",
+            "description": ""
+          },
+          "thread_count": {
+            "section": "CatBoost",
+            "name": "thread_count",
+            "value": "4",
+            "type": "int",
+            "description": ""
+          },
+          "verbose": {
+            "section": "CatBoost",
+            "name": "verbose",
+            "value": "False",
+            "type": "bool",
+            "description": ""
+          },
+          "allow_writing_files": {
+            "section": "CatBoost",
+            "name": "allow_writing_files",
+            "value": "False",
+            "type": "bool",
+            "description": ""
+          }
+        },
+        "Data": {
+          "processed_version": {
+            "section": "Data",
+            "name": "processed_version",
+            "value": "f21822b6eef45530",
+            "type": "str",
+            "description": ""
+          }
+        },
+        "return": {
+          "result_path": {
+            "section": "return",
+            "name": "result_path",
+            "value": "/home/reznik/PycharmProjects/mlops_final_project_reznik_vasilii/.artifacts/clearml-final/experiments/1/result.json",
+            "type": "str",
+            "description": ""
+          }
+        }
+      },
+      "id": "b3988213e07647b796f4a875da44d16e",
+      "last_metrics": {
+        "339d8d14024f2ae5c8dc2e07362eba1d": {
+          "681f55b8d2d5ba0b91e9cd3bc5d1540a": {
+            "metric": "learn",
+            "variant": "Logloss",
+            "value": 0.06832483916908966,
+            "min_value": 0.06832483916908966,
+            "min_value_iteration": 300,
+            "max_value": 0.5721886559425617,
+            "max_value_iteration": 1,
+            "first_value": 0.5721886559425617,
+            "first_value_iteration": 1,
+            "count": 300,
+            "mean_value": 0.09
+          }
+        },
+        "29c6dd717a649f7c1835bfa9249b3142": {
+          "028d9091618657f296222d768c3dd9b8": {
+            "metric": ":monitor:machine",
+            "variant": "network_rx_mbs",
+            "value": 0.041,
+            "min_value": 0.041,
+            "min_value_iteration": 300,
+            "max_value": 0.045,
+            "max_value_iteration": 138,
+            "first_value": 0.045,
+            "first_value_iteration": 138,
+            "count": 2,
+            "mean_value": 0.04
+          },
+          "1a760266c35f86529f9c669d539a2297": {
+            "metric": ":monitor:machine",
+            "variant": "io_read_mbs",
+            "value": 0.007,
+            "min_value": 0.007,
+            "min_value_iteration": 300,
+            "max_value": 1.043,
+            "max_value_iteration": 138,
+            "first_value": 1.043,
+            "first_value_iteration": 138,
+            "count": 2,
+            "mean_value": 0.52
+          },
+          "22db6a87b76b02b50d0a8c54879484ce": {
+            "metric": ":monitor:machine",
+            "variant": "io_write_mbs",
+            "value": 0.551,
+            "min_value": 0.551,
+            "min_value_iteration": 300,
+            "max_value": 0.981,
+            "max_value_iteration": 138,
+            "first_value": 0.981,
+            "first_value_iteration": 138,
+            "count": 2,
+            "mean_value": 0.77
+          },
+          "3964adf302d5c935e9a2451b45bd53a5": {
+            "metric": ":monitor:machine",
+            "variant": "memory_free_gb",
+            "value": 7.216,
+            "min_value": 7.181,
+            "min_value_iteration": 138,
+            "max_value": 7.216,
+            "max_value_iteration": 300,
+            "first_value": 7.181,
+            "first_value_iteration": 138,
+            "count": 2,
+            "mean_value": 7.2
+          },
+          "5385df90d0d0ad8955159a5307d34b38": {
+            "metric": ":monitor:machine",
+            "variant": "cpu_usage",
+            "value": 76.589,
+            "min_value": 76.589,
+            "min_value_iteration": 300,
+            "max_value": 93.698,
+            "max_value_iteration": 138,
+            "first_value": 93.698,
+            "first_value_iteration": 138,
+            "count": 2,
+            "mean_value": 85.14
+          },
+          "5d2e34a3c7e733e0549fa6d9c9666ce3": {
+            "metric": ":monitor:machine",
+            "variant": "network_tx_mbs",
+            "value": 0.021,
+            "min_value": 0.02,
+            "min_value_iteration": 138,
+            "max_value": 0.021,
+            "max_value_iteration": 300,
+            "first_value": 0.02,
+            "first_value_iteration": 138,
+            "count": 2,
+            "mean_value": 0.02
+          },
+          "7e44abd211aa00a7c3bf5090fb33df90": {
+            "metric": ":monitor:machine",
+            "variant": "memory_used_gb",
+            "value": 1.03,
+            "min_value": 0.229,
+            "min_value_iteration": 138,
+            "max_value": 1.03,
+            "max_value_iteration": 300,
+            "first_value": 0.229,
+            "first_value_iteration": 138,
+            "count": 2,
+            "mean_value": 0.63
+          },
+          "bd04514a2d2b5bd8ae2ec5717ad8e317": {
+            "metric": ":monitor:machine",
+            "variant": "cpu_temperature",
+            "value": 76.492,
+            "min_value": 73.814,
+            "min_value_iteration": 138,
+            "max_value": 76.492,
+            "max_value_iteration": 300,
+            "first_value": 73.814,
+            "first_value_iteration": 138,
+            "count": 2,
+            "mean_value": 75.15
+          },
+          "f4f4fd050d744fb78fc0bb7b5a2a9f99": {
+            "metric": ":monitor:machine",
+            "variant": "disk_free_percent",
+            "value": 39.4,
+            "min_value": 39.4,
+            "min_value_iteration": 138,
+            "max_value": 39.4,
+            "max_value_iteration": 138,
+            "first_value": 39.4,
+            "first_value_iteration": 138,
+            "count": 2,
+            "mean_value": 39.4
+          }
+        },
+        "a617908b172c473cb8e8cda059e55bf0": {
+          "02f2582ad1767730eda32a5232ecde7b": {
+            "metric": "validation",
+            "variant": "average_precision",
+            "value": 0.029132798895545937,
+            "min_value": 0.029132798895545937,
+            "min_value_iteration": 0,
+            "max_value": 0.029132798895545937,
+            "max_value_iteration": 0,
+            "first_value": 0.029132798895545937,
+            "first_value_iteration": 0,
+            "count": 1,
+            "mean_value": 0.03
+          },
+          "b1e40cef79f84add16ee3e691b273987": {
+            "metric": "validation",
+            "variant": "prevalence",
+            "value": 0.011870100297241391,
+            "min_value": 0.011870100297241391,
+            "min_value_iteration": 0,
+            "max_value": 0.011870100297241391,
+            "max_value_iteration": 0,
+            "first_value": 0.011870100297241391,
+            "first_value_iteration": 0,
+            "count": 1,
+            "mean_value": 0.01
+          },
+          "e114d9151127c0b8971d184ff7bc2aa3": {
+            "metric": "validation",
+            "variant": "brier",
+            "value": 0.011643999893646959,
+            "min_value": 0.011643999893646959,
+            "min_value_iteration": 0,
+            "max_value": 0.011643999893646959,
+            "max_value_iteration": 0,
+            "first_value": 0.011643999893646959,
+            "first_value_iteration": 0,
+            "count": 1,
+            "mean_value": 0.01
+          },
+          "f59a676e5023928b98c2b8864e94ee25": {
+            "metric": "validation",
+            "variant": "log_loss",
+            "value": 0.061485654624565615,
+            "min_value": 0.061485654624565615,
+            "min_value_iteration": 0,
+            "max_value": 0.061485654624565615,
+            "max_value_iteration": 0,
+            "first_value": 0.061485654624565615,
+            "first_value_iteration": 0,
+            "count": 1,
+            "mean_value": 0.06
+          }
+        }
+      },
+      "name": "train_candidate",
+      "project": "644c7e25596e47b29090f684f5300b31",
+      "status": "completed",
+      "type": "training"
+    },
+    {
+      "hyperparams": {
+        "kwargs": {
+          "processed_path": {
+            "section": "kwargs",
+            "name": "processed_path",
+            "value": "",
+            "type": "str",
+            "description": ""
+          },
+          "root": {
+            "section": "kwargs",
+            "name": "root",
+            "value": "/home/reznik/PycharmProjects/mlops_final_project_reznik_vasilii/.artifacts/clearml-final",
+            "type": "str",
+            "description": ""
+          },
+          "index": {
+            "section": "kwargs",
+            "name": "index",
+            "value": "0",
+            "type": "int",
+            "description": ""
+          }
+        },
+        "kwargs_artifacts": {
+          "processed_path": {
+            "section": "kwargs_artifacts",
+            "name": "processed_path",
+            "value": "614f2e961e0c43389443c39117017f1d.processed_path",
+            "type": "str",
+            "description": ""
+          }
+        },
+        "CatBoost": {
+          "depth": {
+            "section": "CatBoost",
+            "name": "depth",
+            "value": "4",
+            "type": "int",
+            "description": ""
+          },
+          "iterations": {
+            "section": "CatBoost",
+            "name": "iterations",
+            "value": "200",
+            "type": "int",
+            "description": ""
+          },
+          "learning_rate": {
+            "section": "CatBoost",
+            "name": "learning_rate",
+            "value": "0.08",
+            "type": "float",
+            "description": ""
+          },
+          "random_seed": {
+            "section": "CatBoost",
+            "name": "random_seed",
+            "value": "42",
+            "type": "int",
+            "description": ""
+          },
+          "loss_function": {
+            "section": "CatBoost",
+            "name": "loss_function",
+            "value": "Logloss",
+            "type": "str",
+            "description": ""
+          },
+          "thread_count": {
+            "section": "CatBoost",
+            "name": "thread_count",
+            "value": "4",
+            "type": "int",
+            "description": ""
+          },
+          "verbose": {
+            "section": "CatBoost",
+            "name": "verbose",
+            "value": "False",
+            "type": "bool",
+            "description": ""
+          },
+          "allow_writing_files": {
+            "section": "CatBoost",
+            "name": "allow_writing_files",
+            "value": "False",
+            "type": "bool",
+            "description": ""
+          }
+        },
+        "Data": {
+          "processed_version": {
+            "section": "Data",
+            "name": "processed_version",
+            "value": "f21822b6eef45530",
+            "type": "str",
+            "description": ""
+          }
+        },
+        "return": {
+          "result_path": {
+            "section": "return",
+            "name": "result_path",
+            "value": "/home/reznik/PycharmProjects/mlops_final_project_reznik_vasilii/.artifacts/clearml-final/experiments/0/result.json",
+            "type": "str",
+            "description": ""
+          }
+        }
+      },
+      "id": "c0740dfacd534ef4ab11c0327a0537dc",
+      "last_metrics": {
+        "339d8d14024f2ae5c8dc2e07362eba1d": {
+          "681f55b8d2d5ba0b91e9cd3bc5d1540a": {
+            "metric": "learn",
+            "variant": "Logloss",
+            "value": 0.06878302448285921,
+            "min_value": 0.06878302448285921,
+            "min_value_iteration": 200,
+            "max_value": 0.5385270349728726,
+            "max_value_iteration": 1,
+            "first_value": 0.5385270349728726,
+            "first_value_iteration": 1,
+            "count": 200,
+            "mean_value": 0.08
+          }
+        },
+        "29c6dd717a649f7c1835bfa9249b3142": {
+          "028d9091618657f296222d768c3dd9b8": {
+            "metric": ":monitor:machine",
+            "variant": "network_rx_mbs",
+            "value": 0.026,
+            "min_value": 0.026,
+            "min_value_iteration": 174,
+            "max_value": 0.026,
+            "max_value_iteration": 174,
+            "first_value": 0.026,
+            "first_value_iteration": 174,
+            "count": 1,
+            "mean_value": 0.03
+          },
+          "1a760266c35f86529f9c669d539a2297": {
+            "metric": ":monitor:machine",
+            "variant": "io_read_mbs",
+            "value": 0.02,
+            "min_value": 0.02,
+            "min_value_iteration": 174,
+            "max_value": 0.02,
+            "max_value_iteration": 174,
+            "first_value": 0.02,
+            "first_value_iteration": 174,
+            "count": 1,
+            "mean_value": 0.02
+          },
+          "22db6a87b76b02b50d0a8c54879484ce": {
+            "metric": ":monitor:machine",
+            "variant": "io_write_mbs",
+            "value": 1.418,
+            "min_value": 1.418,
+            "min_value_iteration": 174,
+            "max_value": 1.418,
+            "max_value_iteration": 174,
+            "first_value": 1.418,
+            "first_value_iteration": 174,
+            "count": 1,
+            "mean_value": 1.42
+          },
+          "3964adf302d5c935e9a2451b45bd53a5": {
+            "metric": ":monitor:machine",
+            "variant": "memory_free_gb",
+            "value": 7.192,
+            "min_value": 7.192,
+            "min_value_iteration": 174,
+            "max_value": 7.192,
+            "max_value_iteration": 174,
+            "first_value": 7.192,
+            "first_value_iteration": 174,
+            "count": 1,
+            "mean_value": 7.19
+          },
+          "5385df90d0d0ad8955159a5307d34b38": {
+            "metric": ":monitor:machine",
+            "variant": "cpu_usage",
+            "value": 94.329,
+            "min_value": 94.329,
+            "min_value_iteration": 174,
+            "max_value": 94.329,
+            "max_value_iteration": 174,
+            "first_value": 94.329,
+            "first_value_iteration": 174,
+            "count": 1,
+            "mean_value": 94.33
+          },
+          "5d2e34a3c7e733e0549fa6d9c9666ce3": {
+            "metric": ":monitor:machine",
+            "variant": "network_tx_mbs",
+            "value": 0.162,
+            "min_value": 0.162,
+            "min_value_iteration": 174,
+            "max_value": 0.162,
+            "max_value_iteration": 174,
+            "first_value": 0.162,
+            "first_value_iteration": 174,
+            "count": 1,
+            "mean_value": 0.16
+          },
+          "7e44abd211aa00a7c3bf5090fb33df90": {
+            "metric": ":monitor:machine",
+            "variant": "memory_used_gb",
+            "value": 0.237,
+            "min_value": 0.237,
+            "min_value_iteration": 174,
+            "max_value": 0.237,
+            "max_value_iteration": 174,
+            "first_value": 0.237,
+            "first_value_iteration": 174,
+            "count": 1,
+            "mean_value": 0.24
+          },
+          "bd04514a2d2b5bd8ae2ec5717ad8e317": {
+            "metric": ":monitor:machine",
+            "variant": "cpu_temperature",
+            "value": 70.949,
+            "min_value": 70.949,
+            "min_value_iteration": 174,
+            "max_value": 70.949,
+            "max_value_iteration": 174,
+            "first_value": 70.949,
+            "first_value_iteration": 174,
+            "count": 1,
+            "mean_value": 70.95
+          },
+          "f4f4fd050d744fb78fc0bb7b5a2a9f99": {
+            "metric": ":monitor:machine",
+            "variant": "disk_free_percent",
+            "value": 39.4,
+            "min_value": 39.4,
+            "min_value_iteration": 174,
+            "max_value": 39.4,
+            "max_value_iteration": 174,
+            "first_value": 39.4,
+            "first_value_iteration": 174,
+            "count": 1,
+            "mean_value": 39.4
+          }
+        },
+        "a617908b172c473cb8e8cda059e55bf0": {
+          "02f2582ad1767730eda32a5232ecde7b": {
+            "metric": "validation",
+            "variant": "average_precision",
+            "value": 0.02861926641068641,
+            "min_value": 0.02861926641068641,
+            "min_value_iteration": 0,
+            "max_value": 0.02861926641068641,
+            "max_value_iteration": 0,
+            "first_value": 0.02861926641068641,
+            "first_value_iteration": 0,
+            "count": 1,
+            "mean_value": 0.03
+          },
+          "b1e40cef79f84add16ee3e691b273987": {
+            "metric": "validation",
+            "variant": "prevalence",
+            "value": 0.011870100297241391,
+            "min_value": 0.011870100297241391,
+            "min_value_iteration": 0,
+            "max_value": 0.011870100297241391,
+            "max_value_iteration": 0,
+            "first_value": 0.011870100297241391,
+            "first_value_iteration": 0,
+            "count": 1,
+            "mean_value": 0.01
+          },
+          "e114d9151127c0b8971d184ff7bc2aa3": {
+            "metric": "validation",
+            "variant": "brier",
+            "value": 0.011648205288439498,
+            "min_value": 0.011648205288439498,
+            "min_value_iteration": 0,
+            "max_value": 0.011648205288439498,
+            "max_value_iteration": 0,
+            "first_value": 0.011648205288439498,
+            "first_value_iteration": 0,
+            "count": 1,
+            "mean_value": 0.01
+          },
+          "f59a676e5023928b98c2b8864e94ee25": {
+            "metric": "validation",
+            "variant": "log_loss",
+            "value": 0.06155458937757729,
+            "min_value": 0.06155458937757729,
+            "min_value_iteration": 0,
+            "max_value": 0.06155458937757729,
+            "max_value_iteration": 0,
+            "first_value": 0.06155458937757729,
+            "first_value_iteration": 0,
+            "count": 1,
+            "mean_value": 0.06
+          }
+        }
+      },
+      "name": "train_candidate",
+      "project": "644c7e25596e47b29090f684f5300b31",
+      "status": "completed",
+      "type": "training"
+    },
+    {
+      "hyperparams": {
+        "kwargs": {
+          "manifest_key": {
+            "section": "kwargs",
+            "name": "manifest_key",
+            "value": "Reznik_Vasilii_project/processed_data/f21822b6eef45530/manifest.json",
+            "type": "str",
+            "description": ""
+          },
+          "root": {
+            "section": "kwargs",
+            "name": "root",
+            "value": "/home/reznik/PycharmProjects/mlops_final_project_reznik_vasilii/.artifacts/clearml-final",
+            "type": "str",
+            "description": ""
+          }
+        },
+        "return": {
+          "processed_path": {
+            "section": "return",
+            "name": "processed_path",
+            "value": "/home/reznik/PycharmProjects/mlops_final_project_reznik_vasilii/.artifacts/clearml-final/processed",
+            "type": "str",
+            "description": ""
+          }
+        }
+      },
+      "id": "614f2e961e0c43389443c39117017f1d",
+      "last_metrics": {},
+      "name": "fetch_processed",
+      "project": "644c7e25596e47b29090f684f5300b31",
+      "status": "completed",
+      "type": "training"
+    },
+    {
+      "hyperparams": {
+        "Args": {
+          "processed_manifest": {
+            "section": "Args",
+            "name": "processed_manifest",
+            "value": "Reznik_Vasilii_project/processed_data/f21822b6eef45530/manifest.json",
+            "type": "str",
+            "description": "None"
+          },
+          "workdir": {
+            "section": "Args",
+            "name": "workdir",
+            "value": ".artifacts/clearml-final",
+            "type": "Path",
+            "description": "None"
+          },
+          "manifest_key": {
+            "section": "Args",
+            "name": "manifest_key",
+            "value": "Reznik_Vasilii_project/processed_data/f21822b6eef45530/manifest.json",
+            "type": "str",
+            "description": ""
+          },
+          "root": {
+            "section": "Args",
+            "name": "root",
+            "value": "/home/reznik/PycharmProjects/mlops_final_project_reznik_vasilii/.artifacts/clearml-final",
+            "type": "str",
+            "description": ""
+          }
+        },
+        "pipeline": {
+          "default_queue": {
+            "section": "pipeline",
+            "name": "default_queue",
+            "value": "mock",
+            "type": "str",
+            "description": ""
+          },
+          "add_pipeline_tags": {
+            "section": "pipeline",
+            "name": "add_pipeline_tags",
+            "value": "False",
+            "type": "bool",
+            "description": ""
+          },
+          "target_project": {
+            "section": "pipeline",
+            "name": "target_project",
+            "value": "",
+            "description": ""
+          }
+        },
+        "properties": {
+          "version": {
+            "section": "properties",
+            "name": "version",
+            "value": "1.0.0"
+          }
+        }
+      },
+      "id": "2ae6bc87719e4e62a57f6584a0484fdc",
+      "last_metrics": {},
+      "name": "Ecom CatBoost selection #2",
+      "project": "644c7e25596e47b29090f684f5300b31",
+      "status": "completed",
+      "type": "controller"
+    },
+    {
+      "hyperparams": {
+        "kwargs": {
+          "processed_path": {
+            "section": "kwargs",
+            "name": "processed_path",
+            "value": "",
+            "type": "str",
+            "description": ""
+          },
+          "root": {
+            "section": "kwargs",
+            "name": "root",
+            "value": "/home/reznik/PycharmProjects/mlops_final_project_reznik_vasilii/.artifacts/clearml",
+            "type": "str",
+            "description": ""
+          },
+          "results": {
+            "section": "kwargs",
+            "name": "results",
+            "value": "",
+            "description": ""
+          }
+        },
+        "kwargs_artifacts": {
+          "processed_path": {
+            "section": "kwargs_artifacts",
+            "name": "processed_path",
+            "value": "e6cbaa9e9631438cb8456e47fad19bf1.processed_path",
+            "type": "str",
+            "description": ""
+          },
+          "results": {
+            "section": "kwargs_artifacts",
+            "name": "results",
+            "value": "f5add09a07ad4ba8a707776a3bf43482.result_publish_winner_results",
+            "type": "str",
+            "description": ""
+          }
+        },
+        "General": {
+          "model_manifest": {
+            "section": "General",
+            "name": "model_manifest",
+            "value": "Reznik_Vasilii_project/models/b6694a8f7c2fab74-82c0bd8c89ea/manifest.json",
+            "type": "str",
+            "description": ""
+          },
+          "model_version": {
+            "section": "General",
+            "name": "model_version",
+            "value": "b6694a8f7c2fab74-82c0bd8c89ea",
+            "type": "str",
+            "description": ""
+          }
+        },
+        "return": {
+          "model_manifest": {
+            "section": "return",
+            "name": "model_manifest",
+            "value": "Reznik_Vasilii_project/models/b6694a8f7c2fab74-82c0bd8c89ea/manifest.json",
+            "type": "str",
+            "description": ""
+          }
+        }
+      },
+      "id": "fd9a37b65c8a4a4a8114eda6e5694720",
+      "last_metrics": {
+        "098f6bcd4621d373cade4e832627b4f6": {
+          "02f2582ad1767730eda32a5232ecde7b": {
+            "metric": "test",
+            "variant": "average_precision",
+            "value": 0.024641361895722014,
+            "min_value": 0.024641361895722014,
+            "min_value_iteration": 0,
+            "max_value": 0.024641361895722014,
+            "max_value_iteration": 0,
+            "first_value": 0.024641361895722014,
+            "first_value_iteration": 0,
+            "count": 1,
+            "mean_value": 0.02
+          },
+          "b1e40cef79f84add16ee3e691b273987": {
+            "metric": "test",
+            "variant": "prevalence",
+            "value": 0.011196103469483023,
+            "min_value": 0.011196103469483023,
+            "min_value_iteration": 0,
+            "max_value": 0.011196103469483023,
+            "max_value_iteration": 0,
+            "first_value": 0.011196103469483023,
+            "first_value_iteration": 0,
+            "count": 1,
+            "mean_value": 0.01
+          },
+          "e114d9151127c0b8971d184ff7bc2aa3": {
+            "metric": "test",
+            "variant": "brier",
+            "value": 0.011020212648207578,
+            "min_value": 0.011020212648207578,
+            "min_value_iteration": 0,
+            "max_value": 0.011020212648207578,
+            "max_value_iteration": 0,
+            "first_value": 0.011020212648207578,
+            "first_value_iteration": 0,
+            "count": 1,
+            "mean_value": 0.01
+          },
+          "f59a676e5023928b98c2b8864e94ee25": {
+            "metric": "test",
+            "variant": "log_loss",
+            "value": 0.059502118852459596,
+            "min_value": 0.059502118852459596,
+            "min_value_iteration": 0,
+            "max_value": 0.059502118852459596,
+            "max_value_iteration": 0,
+            "first_value": 0.059502118852459596,
+            "first_value_iteration": 0,
+            "count": 1,
+            "mean_value": 0.06
+          }
+        }
+      },
+      "name": "publish_winner",
+      "project": "644c7e25596e47b29090f684f5300b31",
+      "status": "completed",
+      "type": "training"
+    },
+    {
+      "hyperparams": {
+        "kwargs": {
+          "processed_path": {
+            "section": "kwargs",
+            "name": "processed_path",
+            "value": "",
+            "type": "str",
+            "description": ""
+          },
+          "root": {
+            "section": "kwargs",
+            "name": "root",
+            "value": "/home/reznik/PycharmProjects/mlops_final_project_reznik_vasilii/.artifacts/clearml",
+            "type": "str",
+            "description": ""
+          },
+          "index": {
+            "section": "kwargs",
+            "name": "index",
+            "value": "2",
+            "type": "int",
+            "description": ""
+          }
+        },
+        "kwargs_artifacts": {
+          "processed_path": {
+            "section": "kwargs_artifacts",
+            "name": "processed_path",
+            "value": "e6cbaa9e9631438cb8456e47fad19bf1.processed_path",
+            "type": "str",
+            "description": ""
+          }
+        },
+        "CatBoost": {
+          "depth": {
+            "section": "CatBoost",
+            "name": "depth",
+            "value": "6",
+            "type": "int",
+            "description": ""
+          },
+          "iterations": {
+            "section": "CatBoost",
+            "name": "iterations",
+            "value": "250",
+            "type": "int",
+            "description": ""
+          },
+          "learning_rate": {
+            "section": "CatBoost",
+            "name": "learning_rate",
+            "value": "0.08",
+            "type": "float",
+            "description": ""
+          },
+          "random_seed": {
+            "section": "CatBoost",
+            "name": "random_seed",
+            "value": "42",
+            "type": "int",
+            "description": ""
+          },
+          "loss_function": {
+            "section": "CatBoost",
+            "name": "loss_function",
+            "value": "Logloss",
+            "type": "str",
+            "description": ""
+          },
+          "thread_count": {
+            "section": "CatBoost",
+            "name": "thread_count",
+            "value": "4",
+            "type": "int",
+            "description": ""
+          },
+          "verbose": {
+            "section": "CatBoost",
+            "name": "verbose",
+            "value": "False",
+            "type": "bool",
+            "description": ""
+          },
+          "allow_writing_files": {
+            "section": "CatBoost",
+            "name": "allow_writing_files",
+            "value": "False",
+            "type": "bool",
+            "description": ""
+          }
+        },
+        "Data": {
+          "processed_version": {
+            "section": "Data",
+            "name": "processed_version",
+            "value": "b6694a8f7c2fab74",
+            "type": "str",
+            "description": ""
+          }
+        },
+        "return": {
+          "result_path": {
+            "section": "return",
+            "name": "result_path",
+            "value": "/home/reznik/PycharmProjects/mlops_final_project_reznik_vasilii/.artifacts/clearml/experiments/2/result.json",
+            "type": "str",
+            "description": ""
+          }
+        }
+      },
+      "id": "6a0590eb9aca4a9f9b0ca12576f010aa",
+      "last_metrics": {
+        "339d8d14024f2ae5c8dc2e07362eba1d": {
+          "681f55b8d2d5ba0b91e9cd3bc5d1540a": {
+            "metric": "learn",
+            "variant": "Logloss",
+            "value": 0.06767477831118854,
+            "min_value": 0.06767477831118854,
+            "min_value_iteration": 250,
+            "max_value": 0.5359679611410938,
+            "max_value_iteration": 1,
+            "first_value": 0.5359679611410938,
+            "first_value_iteration": 1,
+            "count": 250,
+            "mean_value": 0.09
+          }
+        },
+        "29c6dd717a649f7c1835bfa9249b3142": {
+          "028d9091618657f296222d768c3dd9b8": {
+            "metric": ":monitor:machine",
+            "variant": "network_rx_mbs",
+            "value": 0.055,
+            "min_value": 0.055,
+            "min_value_iteration": 250,
+            "max_value": 0.649,
+            "max_value_iteration": 102,
+            "first_value": 0.649,
+            "first_value_iteration": 102,
+            "count": 2,
+            "mean_value": 0.35
+          },
+          "1a760266c35f86529f9c669d539a2297": {
+            "metric": ":monitor:machine",
+            "variant": "io_read_mbs",
+            "value": 0.327,
+            "min_value": 0.188,
+            "min_value_iteration": 102,
+            "max_value": 0.327,
+            "max_value_iteration": 250,
+            "first_value": 0.188,
+            "first_value_iteration": 102,
+            "count": 2,
+            "mean_value": 0.26
+          },
+          "22db6a87b76b02b50d0a8c54879484ce": {
+            "metric": ":monitor:machine",
+            "variant": "io_write_mbs",
+            "value": 0.223,
+            "min_value": 0.223,
+            "min_value_iteration": 250,
+            "max_value": 1.025,
+            "max_value_iteration": 102,
+            "first_value": 1.025,
+            "first_value_iteration": 102,
+            "count": 2,
+            "mean_value": 0.62
+          },
+          "3964adf302d5c935e9a2451b45bd53a5": {
+            "metric": ":monitor:machine",
+            "variant": "memory_free_gb",
+            "value": 6.901,
+            "min_value": 6.818,
+            "min_value_iteration": 102,
+            "max_value": 6.901,
+            "max_value_iteration": 250,
+            "first_value": 6.818,
+            "first_value_iteration": 102,
+            "count": 2,
+            "mean_value": 6.86
+          },
+          "5385df90d0d0ad8955159a5307d34b38": {
+            "metric": ":monitor:machine",
+            "variant": "cpu_usage",
+            "value": 89.332,
+            "min_value": 89.332,
+            "min_value_iteration": 250,
+            "max_value": 93.457,
+            "max_value_iteration": 102,
+            "first_value": 93.457,
+            "first_value_iteration": 102,
+            "count": 2,
+            "mean_value": 91.4
+          },
+          "5d2e34a3c7e733e0549fa6d9c9666ce3": {
+            "metric": ":monitor:machine",
+            "variant": "network_tx_mbs",
+            "value": 0.358,
+            "min_value": 0.358,
+            "min_value_iteration": 250,
+            "max_value": 0.549,
+            "max_value_iteration": 102,
+            "first_value": 0.549,
+            "first_value_iteration": 102,
+            "count": 2,
+            "mean_value": 0.45
+          },
+          "7e44abd211aa00a7c3bf5090fb33df90": {
+            "metric": ":monitor:machine",
+            "variant": "memory_used_gb",
+            "value": 1.003,
+            "min_value": 0.225,
+            "min_value_iteration": 102,
+            "max_value": 1.003,
+            "max_value_iteration": 250,
+            "first_value": 0.225,
+            "first_value_iteration": 102,
+            "count": 2,
+            "mean_value": 0.62
+          },
+          "bd04514a2d2b5bd8ae2ec5717ad8e317": {
+            "metric": ":monitor:machine",
+            "variant": "cpu_temperature",
+            "value": 83.492,
+            "min_value": 80.203,
+            "min_value_iteration": 102,
+            "max_value": 83.492,
+            "max_value_iteration": 250,
+            "first_value": 80.203,
+            "first_value_iteration": 102,
+            "count": 2,
+            "mean_value": 81.85
+          },
+          "f4f4fd050d744fb78fc0bb7b5a2a9f99": {
+            "metric": ":monitor:machine",
+            "variant": "disk_free_percent",
+            "value": 39.4,
+            "min_value": 39.4,
+            "min_value_iteration": 102,
+            "max_value": 39.4,
+            "max_value_iteration": 102,
+            "first_value": 39.4,
+            "first_value_iteration": 102,
+            "count": 2,
+            "mean_value": 39.4
+          }
+        },
+        "a617908b172c473cb8e8cda059e55bf0": {
+          "02f2582ad1767730eda32a5232ecde7b": {
+            "metric": "validation",
+            "variant": "average_precision",
+            "value": 0.029104713858862263,
+            "min_value": 0.029104713858862263,
+            "min_value_iteration": 0,
+            "max_value": 0.029104713858862263,
+            "max_value_iteration": 0,
+            "first_value": 0.029104713858862263,
+            "first_value_iteration": 0,
+            "count": 1,
+            "mean_value": 0.03
+          },
+          "b1e40cef79f84add16ee3e691b273987": {
+            "metric": "validation",
+            "variant": "prevalence",
+            "value": 0.011870100297241391,
+            "min_value": 0.011870100297241391,
+            "min_value_iteration": 0,
+            "max_value": 0.011870100297241391,
+            "max_value_iteration": 0,
+            "first_value": 0.011870100297241391,
+            "first_value_iteration": 0,
+            "count": 1,
+            "mean_value": 0.01
+          },
+          "e114d9151127c0b8971d184ff7bc2aa3": {
+            "metric": "validation",
+            "variant": "brier",
+            "value": 0.011643372730939251,
+            "min_value": 0.011643372730939251,
+            "min_value_iteration": 0,
+            "max_value": 0.011643372730939251,
+            "max_value_iteration": 0,
+            "first_value": 0.011643372730939251,
+            "first_value_iteration": 0,
+            "count": 1,
+            "mean_value": 0.01
+          },
+          "f59a676e5023928b98c2b8864e94ee25": {
+            "metric": "validation",
+            "variant": "log_loss",
+            "value": 0.06146517082177171,
+            "min_value": 0.06146517082177171,
+            "min_value_iteration": 0,
+            "max_value": 0.06146517082177171,
+            "max_value_iteration": 0,
+            "first_value": 0.06146517082177171,
+            "first_value_iteration": 0,
+            "count": 1,
+            "mean_value": 0.06
+          }
+        }
+      },
+      "name": "train_candidate",
+      "project": "644c7e25596e47b29090f684f5300b31",
+      "status": "completed",
+      "type": "training"
+    },
+    {
+      "hyperparams": {
+        "kwargs": {
+          "processed_path": {
+            "section": "kwargs",
+            "name": "processed_path",
+            "value": "",
+            "type": "str",
+            "description": ""
+          },
+          "root": {
+            "section": "kwargs",
+            "name": "root",
+            "value": "/home/reznik/PycharmProjects/mlops_final_project_reznik_vasilii/.artifacts/clearml",
+            "type": "str",
+            "description": ""
+          },
+          "index": {
+            "section": "kwargs",
+            "name": "index",
+            "value": "1",
+            "type": "int",
+            "description": ""
+          }
+        },
+        "kwargs_artifacts": {
+          "processed_path": {
+            "section": "kwargs_artifacts",
+            "name": "processed_path",
+            "value": "e6cbaa9e9631438cb8456e47fad19bf1.processed_path",
+            "type": "str",
+            "description": ""
+          }
+        },
+        "CatBoost": {
+          "depth": {
+            "section": "CatBoost",
+            "name": "depth",
+            "value": "5",
+            "type": "int",
+            "description": ""
+          },
+          "iterations": {
+            "section": "CatBoost",
+            "name": "iterations",
+            "value": "300",
+            "type": "int",
+            "description": ""
+          },
+          "learning_rate": {
+            "section": "CatBoost",
+            "name": "learning_rate",
+            "value": "0.06",
+            "type": "float",
+            "description": ""
+          },
+          "random_seed": {
+            "section": "CatBoost",
+            "name": "random_seed",
+            "value": "42",
+            "type": "int",
+            "description": ""
+          },
+          "loss_function": {
+            "section": "CatBoost",
+            "name": "loss_function",
+            "value": "Logloss",
+            "type": "str",
+            "description": ""
+          },
+          "thread_count": {
+            "section": "CatBoost",
+            "name": "thread_count",
+            "value": "4",
+            "type": "int",
+            "description": ""
+          },
+          "verbose": {
+            "section": "CatBoost",
+            "name": "verbose",
+            "value": "False",
+            "type": "bool",
+            "description": ""
+          },
+          "allow_writing_files": {
+            "section": "CatBoost",
+            "name": "allow_writing_files",
+            "value": "False",
+            "type": "bool",
+            "description": ""
+          }
+        },
+        "Data": {
+          "processed_version": {
+            "section": "Data",
+            "name": "processed_version",
+            "value": "b6694a8f7c2fab74",
+            "type": "str",
+            "description": ""
+          }
+        },
+        "return": {
+          "result_path": {
+            "section": "return",
+            "name": "result_path",
+            "value": "/home/reznik/PycharmProjects/mlops_final_project_reznik_vasilii/.artifacts/clearml/experiments/1/result.json",
+            "type": "str",
+            "description": ""
+          }
+        }
+      },
+      "id": "ac42e27c10ba48748778e85a9fcccc29",
+      "last_metrics": {
+        "339d8d14024f2ae5c8dc2e07362eba1d": {
+          "681f55b8d2d5ba0b91e9cd3bc5d1540a": {
+            "metric": "learn",
+            "variant": "Logloss",
+            "value": 0.06830419690958361,
+            "min_value": 0.06830419690958361,
+            "min_value_iteration": 300,
+            "max_value": 0.5721886559425617,
+            "max_value_iteration": 1,
+            "first_value": 0.5721886559425617,
+            "first_value_iteration": 1,
+            "count": 300,
+            "mean_value": 0.09
+          }
+        },
+        "29c6dd717a649f7c1835bfa9249b3142": {
+          "028d9091618657f296222d768c3dd9b8": {
+            "metric": ":monitor:machine",
+            "variant": "network_rx_mbs",
+            "value": 0.039,
+            "min_value": 0.031,
+            "min_value_iteration": 145,
+            "max_value": 0.039,
+            "max_value_iteration": 300,
+            "first_value": 0.031,
+            "first_value_iteration": 145,
+            "count": 2,
+            "mean_value": 0.03
+          },
+          "1a760266c35f86529f9c669d539a2297": {
+            "metric": ":monitor:machine",
+            "variant": "io_read_mbs",
+            "value": 0.656,
+            "min_value": 0.118,
+            "min_value_iteration": 145,
+            "max_value": 0.656,
+            "max_value_iteration": 300,
+            "first_value": 0.118,
+            "first_value_iteration": 145,
+            "count": 2,
+            "mean_value": 0.39
+          },
+          "22db6a87b76b02b50d0a8c54879484ce": {
+            "metric": ":monitor:machine",
+            "variant": "io_write_mbs",
+            "value": 0.907,
+            "min_value": 0.907,
+            "min_value_iteration": 300,
+            "max_value": 2.732,
+            "max_value_iteration": 145,
+            "first_value": 2.732,
+            "first_value_iteration": 145,
+            "count": 2,
+            "mean_value": 1.82
+          },
+          "3964adf302d5c935e9a2451b45bd53a5": {
+            "metric": ":monitor:machine",
+            "variant": "memory_free_gb",
+            "value": 6.998,
+            "min_value": 6.966,
+            "min_value_iteration": 145,
+            "max_value": 6.998,
+            "max_value_iteration": 300,
+            "first_value": 6.966,
+            "first_value_iteration": 145,
+            "count": 2,
+            "mean_value": 6.98
+          },
+          "5385df90d0d0ad8955159a5307d34b38": {
+            "metric": ":monitor:machine",
+            "variant": "cpu_usage",
+            "value": 75.806,
+            "min_value": 75.806,
+            "min_value_iteration": 300,
+            "max_value": 94.151,
+            "max_value_iteration": 145,
+            "first_value": 94.151,
+            "first_value_iteration": 145,
+            "count": 2,
+            "mean_value": 84.98
+          },
+          "5d2e34a3c7e733e0549fa6d9c9666ce3": {
+            "metric": ":monitor:machine",
+            "variant": "network_tx_mbs",
+            "value": 0.338,
+            "min_value": 0.338,
+            "min_value_iteration": 300,
+            "max_value": 0.389,
+            "max_value_iteration": 145,
+            "first_value": 0.389,
+            "first_value_iteration": 145,
+            "count": 2,
+            "mean_value": 0.36
+          },
+          "7e44abd211aa00a7c3bf5090fb33df90": {
+            "metric": ":monitor:machine",
+            "variant": "memory_used_gb",
+            "value": 0.983,
+            "min_value": 0.231,
+            "min_value_iteration": 145,
+            "max_value": 0.983,
+            "max_value_iteration": 300,
+            "first_value": 0.231,
+            "first_value_iteration": 145,
+            "count": 2,
+            "mean_value": 0.61
+          },
+          "bd04514a2d2b5bd8ae2ec5717ad8e317": {
+            "metric": ":monitor:machine",
+            "variant": "cpu_temperature",
+            "value": 76.373,
+            "min_value": 73.119,
+            "min_value_iteration": 145,
+            "max_value": 76.373,
+            "max_value_iteration": 300,
+            "first_value": 73.119,
+            "first_value_iteration": 145,
+            "count": 2,
+            "mean_value": 74.75
+          },
+          "f4f4fd050d744fb78fc0bb7b5a2a9f99": {
+            "metric": ":monitor:machine",
+            "variant": "disk_free_percent",
+            "value": 39.4,
+            "min_value": 39.4,
+            "min_value_iteration": 145,
+            "max_value": 39.4,
+            "max_value_iteration": 145,
+            "first_value": 39.4,
+            "first_value_iteration": 145,
+            "count": 2,
+            "mean_value": 39.4
+          }
+        },
+        "a617908b172c473cb8e8cda059e55bf0": {
+          "02f2582ad1767730eda32a5232ecde7b": {
+            "metric": "validation",
+            "variant": "average_precision",
+            "value": 0.02916019655025285,
+            "min_value": 0.02916019655025285,
+            "min_value_iteration": 0,
+            "max_value": 0.02916019655025285,
+            "max_value_iteration": 0,
+            "first_value": 0.02916019655025285,
+            "first_value_iteration": 0,
+            "count": 1,
+            "mean_value": 0.03
+          },
+          "b1e40cef79f84add16ee3e691b273987": {
+            "metric": "validation",
+            "variant": "prevalence",
+            "value": 0.011870100297241391,
+            "min_value": 0.011870100297241391,
+            "min_value_iteration": 0,
+            "max_value": 0.011870100297241391,
+            "max_value_iteration": 0,
+            "first_value": 0.011870100297241391,
+            "first_value_iteration": 0,
+            "count": 1,
+            "mean_value": 0.01
+          },
+          "e114d9151127c0b8971d184ff7bc2aa3": {
+            "metric": "validation",
+            "variant": "brier",
+            "value": 0.0116449324756135,
+            "min_value": 0.0116449324756135,
+            "min_value_iteration": 0,
+            "max_value": 0.0116449324756135,
+            "max_value_iteration": 0,
+            "first_value": 0.0116449324756135,
+            "first_value_iteration": 0,
+            "count": 1,
+            "mean_value": 0.01
+          },
+          "f59a676e5023928b98c2b8864e94ee25": {
+            "metric": "validation",
+            "variant": "log_loss",
+            "value": 0.06147760783229706,
+            "min_value": 0.06147760783229706,
+            "min_value_iteration": 0,
+            "max_value": 0.06147760783229706,
+            "max_value_iteration": 0,
+            "first_value": 0.06147760783229706,
+            "first_value_iteration": 0,
+            "count": 1,
+            "mean_value": 0.06
+          }
+        }
+      },
+      "name": "train_candidate",
+      "project": "644c7e25596e47b29090f684f5300b31",
+      "status": "completed",
+      "type": "training"
+    },
+    {
+      "hyperparams": {
+        "kwargs": {
+          "processed_path": {
+            "section": "kwargs",
+            "name": "processed_path",
+            "value": "",
+            "type": "str",
+            "description": ""
+          },
+          "root": {
+            "section": "kwargs",
+            "name": "root",
+            "value": "/home/reznik/PycharmProjects/mlops_final_project_reznik_vasilii/.artifacts/clearml",
+            "type": "str",
+            "description": ""
+          },
+          "index": {
+            "section": "kwargs",
+            "name": "index",
+            "value": "0",
+            "type": "int",
+            "description": ""
+          }
+        },
+        "kwargs_artifacts": {
+          "processed_path": {
+            "section": "kwargs_artifacts",
+            "name": "processed_path",
+            "value": "e6cbaa9e9631438cb8456e47fad19bf1.processed_path",
+            "type": "str",
+            "description": ""
+          }
+        },
+        "CatBoost": {
+          "depth": {
+            "section": "CatBoost",
+            "name": "depth",
+            "value": "4",
+            "type": "int",
+            "description": ""
+          },
+          "iterations": {
+            "section": "CatBoost",
+            "name": "iterations",
+            "value": "200",
+            "type": "int",
+            "description": ""
+          },
+          "learning_rate": {
+            "section": "CatBoost",
+            "name": "learning_rate",
+            "value": "0.08",
+            "type": "float",
+            "description": ""
+          },
+          "random_seed": {
+            "section": "CatBoost",
+            "name": "random_seed",
+            "value": "42",
+            "type": "int",
+            "description": ""
+          },
+          "loss_function": {
+            "section": "CatBoost",
+            "name": "loss_function",
+            "value": "Logloss",
+            "type": "str",
+            "description": ""
+          },
+          "thread_count": {
+            "section": "CatBoost",
+            "name": "thread_count",
+            "value": "4",
+            "type": "int",
+            "description": ""
+          },
+          "verbose": {
+            "section": "CatBoost",
+            "name": "verbose",
+            "value": "False",
+            "type": "bool",
+            "description": ""
+          },
+          "allow_writing_files": {
+            "section": "CatBoost",
+            "name": "allow_writing_files",
+            "value": "False",
+            "type": "bool",
+            "description": ""
+          }
+        },
+        "Data": {
+          "processed_version": {
+            "section": "Data",
+            "name": "processed_version",
+            "value": "b6694a8f7c2fab74",
+            "type": "str",
+            "description": ""
+          }
+        },
+        "return": {
+          "result_path": {
+            "section": "return",
+            "name": "result_path",
+            "value": "/home/reznik/PycharmProjects/mlops_final_project_reznik_vasilii/.artifacts/clearml/experiments/0/result.json",
+            "type": "str",
+            "description": ""
+          }
+        }
+      },
+      "id": "4dda161d3c744a019364dca19db1ecc9",
+      "last_metrics": {
+        "339d8d14024f2ae5c8dc2e07362eba1d": {
+          "681f55b8d2d5ba0b91e9cd3bc5d1540a": {
+            "metric": "learn",
+            "variant": "Logloss",
+            "value": 0.06879827684702734,
+            "min_value": 0.06879827684702734,
+            "min_value_iteration": 200,
+            "max_value": 0.538527065315477,
+            "max_value_iteration": 1,
+            "first_value": 0.538527065315477,
+            "first_value_iteration": 1,
+            "count": 200,
+            "mean_value": 0.08
+          }
+        },
+        "29c6dd717a649f7c1835bfa9249b3142": {
+          "028d9091618657f296222d768c3dd9b8": {
+            "metric": ":monitor:machine",
+            "variant": "network_rx_mbs",
+            "value": 0.029,
+            "min_value": 0.029,
+            "min_value_iteration": 150,
+            "max_value": 0.029,
+            "max_value_iteration": 150,
+            "first_value": 0.029,
+            "first_value_iteration": 150,
+            "count": 1,
+            "mean_value": 0.03
+          },
+          "1a760266c35f86529f9c669d539a2297": {
+            "metric": ":monitor:machine",
+            "variant": "io_read_mbs",
+            "value": 0.68,
+            "min_value": 0.68,
+            "min_value_iteration": 150,
+            "max_value": 0.68,
+            "max_value_iteration": 150,
+            "first_value": 0.68,
+            "first_value_iteration": 150,
+            "count": 1,
+            "mean_value": 0.68
+          },
+          "22db6a87b76b02b50d0a8c54879484ce": {
+            "metric": ":monitor:machine",
+            "variant": "io_write_mbs",
+            "value": 23.251,
+            "min_value": 23.251,
+            "min_value_iteration": 150,
+            "max_value": 23.251,
+            "max_value_iteration": 150,
+            "first_value": 23.251,
+            "first_value_iteration": 150,
+            "count": 1,
+            "mean_value": 23.25
+          },
+          "3964adf302d5c935e9a2451b45bd53a5": {
+            "metric": ":monitor:machine",
+            "variant": "memory_free_gb",
+            "value": 6.907,
+            "min_value": 6.907,
+            "min_value_iteration": 150,
+            "max_value": 6.907,
+            "max_value_iteration": 150,
+            "first_value": 6.907,
+            "first_value_iteration": 150,
+            "count": 1,
+            "mean_value": 6.91
+          },
+          "5385df90d0d0ad8955159a5307d34b38": {
+            "metric": ":monitor:machine",
+            "variant": "cpu_usage",
+            "value": 90.736,
+            "min_value": 90.736,
+            "min_value_iteration": 150,
+            "max_value": 90.736,
+            "max_value_iteration": 150,
+            "first_value": 90.736,
+            "first_value_iteration": 150,
+            "count": 1,
+            "mean_value": 90.74
+          },
+          "5d2e34a3c7e733e0549fa6d9c9666ce3": {
+            "metric": ":monitor:machine",
+            "variant": "network_tx_mbs",
+            "value": 0.355,
+            "min_value": 0.355,
+            "min_value_iteration": 150,
+            "max_value": 0.355,
+            "max_value_iteration": 150,
+            "first_value": 0.355,
+            "first_value_iteration": 150,
+            "count": 1,
+            "mean_value": 0.35
+          },
+          "7e44abd211aa00a7c3bf5090fb33df90": {
+            "metric": ":monitor:machine",
+            "variant": "memory_used_gb",
+            "value": 0.219,
+            "min_value": 0.219,
+            "min_value_iteration": 150,
+            "max_value": 0.219,
+            "max_value_iteration": 150,
+            "first_value": 0.219,
+            "first_value_iteration": 150,
+            "count": 1,
+            "mean_value": 0.22
+          },
+          "bd04514a2d2b5bd8ae2ec5717ad8e317": {
+            "metric": ":monitor:machine",
+            "variant": "cpu_temperature",
+            "value": 69.593,
+            "min_value": 69.593,
+            "min_value_iteration": 150,
+            "max_value": 69.593,
+            "max_value_iteration": 150,
+            "first_value": 69.593,
+            "first_value_iteration": 150,
+            "count": 1,
+            "mean_value": 69.59
+          },
+          "f4f4fd050d744fb78fc0bb7b5a2a9f99": {
+            "metric": ":monitor:machine",
+            "variant": "disk_free_percent",
+            "value": 39.4,
+            "min_value": 39.4,
+            "min_value_iteration": 150,
+            "max_value": 39.4,
+            "max_value_iteration": 150,
+            "first_value": 39.4,
+            "first_value_iteration": 150,
+            "count": 1,
+            "mean_value": 39.4
+          }
+        },
+        "a617908b172c473cb8e8cda059e55bf0": {
+          "02f2582ad1767730eda32a5232ecde7b": {
+            "metric": "validation",
+            "variant": "average_precision",
+            "value": 0.0287891444557227,
+            "min_value": 0.0287891444557227,
+            "min_value_iteration": 0,
+            "max_value": 0.0287891444557227,
+            "max_value_iteration": 0,
+            "first_value": 0.0287891444557227,
+            "first_value_iteration": 0,
+            "count": 1,
+            "mean_value": 0.03
+          },
+          "b1e40cef79f84add16ee3e691b273987": {
+            "metric": "validation",
+            "variant": "prevalence",
+            "value": 0.011870100297241391,
+            "min_value": 0.011870100297241391,
+            "min_value_iteration": 0,
+            "max_value": 0.011870100297241391,
+            "max_value_iteration": 0,
+            "first_value": 0.011870100297241391,
+            "first_value_iteration": 0,
+            "count": 1,
+            "mean_value": 0.01
+          },
+          "e114d9151127c0b8971d184ff7bc2aa3": {
+            "metric": "validation",
+            "variant": "brier",
+            "value": 0.011646230298712533,
+            "min_value": 0.011646230298712533,
+            "min_value_iteration": 0,
+            "max_value": 0.011646230298712533,
+            "max_value_iteration": 0,
+            "first_value": 0.011646230298712533,
+            "first_value_iteration": 0,
+            "count": 1,
+            "mean_value": 0.01
+          },
+          "f59a676e5023928b98c2b8864e94ee25": {
+            "metric": "validation",
+            "variant": "log_loss",
+            "value": 0.06154228220607217,
+            "min_value": 0.06154228220607217,
+            "min_value_iteration": 0,
+            "max_value": 0.06154228220607217,
+            "max_value_iteration": 0,
+            "first_value": 0.06154228220607217,
+            "first_value_iteration": 0,
+            "count": 1,
+            "mean_value": 0.06
+          }
+        }
+      },
+      "name": "train_candidate",
+      "project": "644c7e25596e47b29090f684f5300b31",
+      "status": "completed",
+      "type": "training"
+    },
+    {
+      "hyperparams": {
+        "kwargs": {
+          "manifest_key": {
+            "section": "kwargs",
+            "name": "manifest_key",
+            "value": "Reznik_Vasilii_project/processed_data/b6694a8f7c2fab74/manifest.json",
+            "type": "str",
+            "description": ""
+          },
+          "root": {
+            "section": "kwargs",
+            "name": "root",
+            "value": "/home/reznik/PycharmProjects/mlops_final_project_reznik_vasilii/.artifacts/clearml",
+            "type": "str",
+            "description": ""
+          }
+        },
+        "return": {
+          "processed_path": {
+            "section": "return",
+            "name": "processed_path",
+            "value": "/home/reznik/PycharmProjects/mlops_final_project_reznik_vasilii/.artifacts/clearml/processed",
+            "type": "str",
+            "description": ""
+          }
+        }
+      },
+      "id": "e6cbaa9e9631438cb8456e47fad19bf1",
+      "last_metrics": {},
+      "name": "fetch_processed",
+      "project": "644c7e25596e47b29090f684f5300b31",
+      "status": "completed",
+      "type": "training"
+    },
+    {
+      "hyperparams": {
+        "Args": {
+          "processed_manifest": {
+            "section": "Args",
+            "name": "processed_manifest",
+            "value": "Reznik_Vasilii_project/processed_data/b6694a8f7c2fab74/manifest.json",
+            "type": "str",
+            "description": "None"
+          },
+          "workdir": {
+            "section": "Args",
+            "name": "workdir",
+            "value": ".artifacts/clearml",
+            "type": "Path",
+            "description": "None"
+          },
+          "manifest_key": {
+            "section": "Args",
+            "name": "manifest_key",
+            "value": "Reznik_Vasilii_project/processed_data/b6694a8f7c2fab74/manifest.json",
+            "type": "str",
+            "description": ""
+          },
+          "root": {
+            "section": "Args",
+            "name": "root",
+            "value": "/home/reznik/PycharmProjects/mlops_final_project_reznik_vasilii/.artifacts/clearml",
+            "type": "str",
+            "description": ""
+          }
+        },
+        "pipeline": {
+          "default_queue": {
+            "section": "pipeline",
+            "name": "default_queue",
+            "value": "mock",
+            "type": "str",
+            "description": ""
+          },
+          "add_pipeline_tags": {
+            "section": "pipeline",
+            "name": "add_pipeline_tags",
+            "value": "False",
+            "type": "bool",
+            "description": ""
+          },
+          "target_project": {
+            "section": "pipeline",
+            "name": "target_project",
+            "value": "",
+            "description": ""
+          }
+        },
+        "properties": {
+          "version": {
+            "section": "properties",
+            "name": "version",
+            "value": "1.0.0"
+          }
+        }
+      },
+      "id": "f5add09a07ad4ba8a707776a3bf43482",
+      "last_metrics": {},
+      "name": "Ecom CatBoost selection",
+      "project": "644c7e25596e47b29090f684f5300b31",
+      "status": "completed",
+      "type": "controller"
+    }
+  ]
+}

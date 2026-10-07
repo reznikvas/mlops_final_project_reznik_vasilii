@@ -1,0 +1,12 @@
+{
+  "checked_at": "2026-10-05T19:48:41.543150+00:00",
+  "deployment_method": "existing authorized SSH; not GitLab deploy job",
+  "expected_image": "mlops.gitlab.yandexcloud.net:5050/s87443/mlops_final_project_reznik_vasilii@sha256:fe2d4d87ef99e00b1a29bd3ea0b1ff2904de03db9a06b8ac3d4a90f59cdaffc4",
+  "running_image": "mlops.gitlab.yandexcloud.net:5050/s87443/mlops_final_project_reznik_vasilii@sha256:fe2d4d87ef99e00b1a29bd3ea0b1ff2904de03db9a06b8ac3d4a90f59cdaffc4",
+  "health": {
+    "status": "ok",
+    "model_version": "f21822b6eef45530-9b2c1d2a64cd"
+  },
+  "api_smoke": "7 passed",
+  "monitoring": "Prometheus, Loki, Grafana passed"
+}

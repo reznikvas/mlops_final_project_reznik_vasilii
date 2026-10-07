@@ -1,0 +1,82 @@
+{
+  "version": "f21822b6eef45530",
+  "schema_version": "1",
+  "sources": {
+    "events.csv": {
+      "sha256": "3745aa83238b1e6d44d8fda209807899f420084398f94ddf745f3cbcfecbf9e7"
+    },
+    "category_tree.csv": {
+      "sha256": "94e865eb0a3d48cbbfe3b79079018dd92509315c88f5fd8d00d0b4b5af434f5b"
+    },
+    "item_properties_part1.csv": {
+      "sha256": "30aad5aeca58b2dc27dcc73e1708565f5818e45adb3eb57401f91e87355b0b81"
+    },
+    "item_properties_part2.csv": {
+      "sha256": "d5e7d1a91dc40f522aeb596b267e6c87d8aed689a7192d12369cfb165eb987e5"
+    }
+  },
+  "recipe": {
+    "schema": "1",
+    "history": 0.2,
+    "train_end": 0.6,
+    "validation_end": 0.8,
+    "window_hours": 24,
+    "code_sha256": "6e1e10b23790c77bb706d68896c1d3e83473fc1460f91efa6c1c05d942130301",
+    "features_code_sha256": "8f785058117f63189a9232a410c99c10c01f8e893000fb65dd429f31eea1b511",
+    "versions": {
+      "pandas": "2.2.3",
+      "numpy": "2.2.5",
+      "pyarrow": "22.0.0"
+    }
+  },
+  "features": [
+    "views",
+    "purchases",
+    "ctr",
+    "hour",
+    "weekday",
+    "categoryid",
+    "available"
+  ],
+  "snapshot_timestamp": 1433006641064,
+  "splits": {
+    "train": {
+      "rows": 1029905,
+      "positives": 14100,
+      "prevalence": 0.013690583112034605,
+      "min_timestamp": 1433006643693,
+      "max_timestamp": 1437689513225
+    },
+    "validation": {
+      "rows": 460232,
+      "positives": 5463,
+      "prevalence": 0.011870100297241391,
+      "min_timestamp": 1437775916537,
+      "max_timestamp": 1440074060932
+    },
+    "test": {
+      "rows": 404873,
+      "positives": 4533,
+      "prevalence": 0.011196103469483023,
+      "min_timestamp": 1440160581851,
+      "max_timestamp": 1442458773320
+    }
+  },
+  "duplicate_events_removed": 460,
+  "unknown_views_dropped": 173282,
+  "property_rows": {
+    "item_properties_part1.csv": 10999999,
+    "item_properties_part2.csv": 9275903
+  },
+  "events_rows": 2755641,
+  "category_rows": 1669,
+  "items": 382599,
+  "files": {
+    "item_features.parquet": {
+      "sha256": "5f3ec805f9e27248b9544e4439b76fbf31578b4fc640f89b0e9c4f035cab86eb"
+    },
+    "data_for_training.parquet": {
+      "sha256": "868b8b93a7ee94775119b88ff8f75eb92526209bbf6c32af90469908e2dd92b8"
+    }
+  }
+}

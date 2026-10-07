@@ -1,0 +1,75 @@
+name: ecom-inference
+services:
+  model-init:
+    image: ${APP_IMAGE:?Требуется версия образа}
+    user: "0:0"
+    entrypoint: ["python", "-m", "scripts.download_model"]
+    env_file: ["${S3_ENV_FILE:-../../.secrets/s3.env}"]
+    environment:
+      MODEL_DIR: /models
+      MODEL_MANIFEST_KEY: ${MODEL_MANIFEST_KEY:?}
+      MODEL_VERSION: ${MODEL_VERSION:?}
+    volumes: ["models:/models"]
+  api:
+    image: ${APP_IMAGE:?}
+    container_name: ecom-api
+    environment:
+      MODEL_DIR: /models
+      MODEL_VERSION: ${MODEL_VERSION:?}
+    volumes: ["models:/models:ro"]
+    ports: ["8000:8000"]
+    depends_on:
+      model-init: {condition: service_completed_successfully}
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=3)"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    logging:
+      driver: json-file
+      options: {max-size: "10m", max-file: "3"}
+  prometheus:
+    image: prom/prometheus:v3.5.0
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./alerts.yml:/etc/prometheus/alerts.yml:ro
+      - prometheus:/prometheus
+    ports: ["127.0.0.1:9090:9090"]
+    restart: unless-stopped
+  loki:
+    image: grafana/loki:3.5.3
+    command: ["-config.file=/etc/loki/local-config.yaml"]
+    volumes:
+      - ./loki.yml:/etc/loki/local-config.yaml:ro
+      - loki:/loki
+    ports: ["127.0.0.1:3100:3100"]
+    restart: unless-stopped
+  alloy:
+    image: grafana/alloy:v1.9.2
+    user: "0:0"
+    command: ["run", "--storage.path=/var/lib/alloy", "/etc/alloy/config.alloy"]
+    volumes:
+      - ./config.alloy:/etc/alloy/config.alloy:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - alloy:/var/lib/alloy
+    restart: unless-stopped
+  grafana:
+    image: grafana/grafana:12.1.1
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_PASSWORD:?}
+      GF_USERS_ALLOW_SIGN_UP: "false"
+    volumes:
+      - ../grafana/provisioning:/etc/grafana/provisioning:ro
+      - ../grafana/dashboards:/var/lib/grafana/dashboards:ro
+      - grafana:/var/lib/grafana
+    ports: ["127.0.0.1:3000:3000"]
+    restart: unless-stopped
+volumes:
+  models:
+    name: ecom-model-${MODEL_VERSION:?}
+  prometheus:
+  loki:
+  alloy:
+  grafana:

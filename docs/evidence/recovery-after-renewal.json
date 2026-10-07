@@ -1,0 +1,13 @@
+{
+  "checked_at": "2026-10-05T19:36:06.998394+00:00",
+  "airflow_postgres_restart_policy": "unless-stopped",
+  "airflow_health_file": "airflow-after-renewal.json",
+  "docker_log_null_bytes": 262,
+  "private_log_backup_sha256": "482d0001150a1855bfc781b9fd3742b906f460ad9e8012b5e679e4e8b91c59aa",
+  "api_recreated_with_same_model": {
+    "status": "ok",
+    "model_version": "f21822b6eef45530-9b2c1d2a64cd"
+  },
+  "monitoring_rechecked": true,
+  "monitoring_evidence": "monitoring.json"
+}

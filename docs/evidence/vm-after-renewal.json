@@ -1,0 +1,77 @@
+{
+  "checked_at": "2026-10-05T19:23:47.351347+00:00",
+  "results": [
+    {
+      "path": "/health",
+      "status": 200,
+      "body": {
+        "status": "ok",
+        "model_version": "f21822b6eef45530-9b2c1d2a64cd"
+      }
+    },
+    {
+      "path": "/docs",
+      "status": 200
+    },
+    {
+      "path": "/predict_purchase?itemid=356475&hour=14&weekday=3",
+      "status": 200,
+      "body": {
+        "itemid": 356475,
+        "purchase_probability": 0.014421234235027114,
+        "model_version": "f21822b6eef45530-9b2c1d2a64cd"
+      }
+    },
+    {
+      "path": "/predict_purchase?itemid=999999999&hour=14&weekday=3",
+      "status": 404,
+      "body": {
+        "detail": "Товар отсутствует в версии каталога"
+      }
+    },
+    {
+      "path": "/predict_purchase?itemid=356475&hour=24&weekday=3",
+      "status": 422,
+      "body": {
+        "detail": [
+          {
+            "type": "less_than_equal",
+            "loc": [
+              "query",
+              "hour"
+            ],
+            "msg": "Input should be less than or equal to 23",
+            "input": "24",
+            "ctx": {
+              "le": 23
+            }
+          }
+        ]
+      }
+    },
+    {
+      "path": "/predict_purchase?itemid=-1&hour=14&weekday=3",
+      "status": 422,
+      "body": {
+        "detail": [
+          {
+            "type": "greater_than_equal",
+            "loc": [
+              "query",
+              "itemid"
+            ],
+            "msg": "Input should be greater than or equal to 0",
+            "input": "-1",
+            "ctx": {
+              "ge": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "path": "/metrics",
+      "status": 200
+    }
+  ]
+}

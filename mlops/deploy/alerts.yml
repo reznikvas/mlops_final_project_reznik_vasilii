@@ -1,0 +1,21 @@
+groups:
+  - name: ecom
+    rules:
+      - alert: EcomUnavailable
+        expr: up{job="ecom"} == 0 or model_ready{job="ecom"} == 0
+        for: 30s
+        labels: {severity: critical}
+        annotations:
+          summary: Сервис или модель недоступны
+      - alert: EcomServerErrors
+        expr: sum(rate(http_requests_total{status=~"5.."}[2m])) / clamp_min(sum(rate(http_requests_total[2m])), 0.001) > 0.05
+        for: 1m
+        labels: {severity: warning}
+        annotations:
+          summary: Более 5% запросов завершаются серверной ошибкой
+      - alert: EcomLatency
+        expr: histogram_quantile(0.95, sum by (le) (rate(http_request_duration_seconds_bucket[5m]))) > 1
+        for: 2m
+        labels: {severity: warning}
+        annotations:
+          summary: Задержка p95 превышает эксплуатационный предел 1 с

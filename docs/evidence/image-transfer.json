@@ -1,0 +1,20 @@
+{
+  "archive_sha256": "bb52d79a8441a0e25897c3edbf7f71d8e69b71d06a31f300b28aea51ae4cea32",
+  "archive_equal": true,
+  "rootfs_layers_equal": true,
+  "runtime_config_equal": true,
+  "inspect_metadata_differences": [
+    "AttachStdout",
+    "AttachStderr",
+    "AttachStdin",
+    "Domainname",
+    "Tty",
+    "StdinOnce",
+    "OpenStdin",
+    "Hostname",
+    "Image"
+  ],
+  "local_id": "sha256:b9d969c71c0be3d23fcda5aff2aff39e4d5c866027a19eb88c2c04de3fba9750",
+  "vm_id": "sha256:0da8bf65542e265924bbe2530d1505188b3f97f5b2b290da2c43936f3f7ff87c",
+  "note": "Docker 29 containerd store и Docker 24 classic показывают разные ID и служебные поля inspect. Переданный архив, rootfs и runtime config совпадают."
+}

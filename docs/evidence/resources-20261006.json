@@ -1,0 +1,29 @@
+{
+  "checked_at": "2026-10-06T08:05:10.310638+00:00",
+  "s3": "head_bucket OK",
+  "raw": "manifest accessible",
+  "processed": "manifest accessible",
+  "model": "manifest accessible",
+  "airflow": {
+    "dag_processor": {
+      "latest_dag_processor_heartbeat": null,
+      "status": null
+    },
+    "metadatabase": {
+      "status": "healthy"
+    },
+    "scheduler": {
+      "latest_scheduler_heartbeat": "2026-10-06T08:05:10.815023+00:00",
+      "status": "healthy"
+    },
+    "triggerer": {
+      "latest_triggerer_heartbeat": "2026-10-06T08:05:10.347301+00:00",
+      "status": "healthy"
+    }
+  },
+  "clearml": {
+    "id": "2ae6bc87719e4e62a57f6584a0484fdc",
+    "status": "completed",
+    "name": "Ecom CatBoost selection #2"
+  }
+}

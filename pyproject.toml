@@ -1,0 +1,46 @@
+[project]
+name = "ecom-purchase"
+version = "1.0.0"
+description = "Воспроизводимая оценка вероятности покупки"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+  "fastapi==0.115.12", "uvicorn==0.34.2", "pandas==2.2.3",
+  "numpy==2.2.5", "pyarrow==22.0.0", "catboost==1.2.8",
+  "scikit-learn==1.6.1", "boto3==1.40.69", "prometheus-client==0.22.1",
+  "clearml==2.0.2", "pyyaml==6.0.3", "httpx==0.28.1",
+]
+
+[dependency-groups]
+dev = [
+    "pytest==9.0.0",
+    "ruff==0.12.10",
+    "black==25.1.0",
+    "mypy==1.17.1",
+    "pandas-stubs==2.2.3.250527",
+    "types-PyYAML==6.0.12.20250915",
+    "playwright==1.55.0",
+]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 88
+exclude = [".artifacts"]
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+
+[tool.black]
+target-version = ["py312"]
+extend-exclude = "/.artifacts/"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-ra"
+
+[tool.mypy]
+python_version = "3.12"
+files = ["src", "tests", "scripts", "prepare_features.py", "train_model.py", "main.py", "mlops"]
+check_untyped_defs = true
+disallow_untyped_defs = true
+ignore_missing_imports = true
+warn_unused_ignores = true

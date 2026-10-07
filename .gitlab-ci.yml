@@ -1,0 +1,126 @@
+stages: [lint, formating, test, build, save, deploy]
+
+default:
+  tags: [k8s]
+
+variables:
+  UV_CACHE_DIR: .cache/uv
+  PIP_DISABLE_PIP_VERSION_CHECK: "1"
+  S3_ENDPOINT_URL: https://storage.yandexcloud.net
+  AWS_DEFAULT_REGION: ru-central1
+
+.python:
+  image: python:3.12.13-slim-bookworm
+  before_script:
+    - pip install uv==0.11.20
+    - uv sync --frozen
+  cache:
+    key:
+      files: [uv.lock]
+    paths: [.cache/uv]
+
+lint:
+  extends: .python
+  stage: lint
+  script:
+    - uv run --no-sync ruff check .
+    - uv run --no-sync black --check --workers 1 .
+    - uv run --no-sync mypy
+
+formating:
+  extends: .python
+  stage: formating
+  script:
+    - uv run --no-sync black --check --workers 1 .
+
+test:
+  extends: .python
+  stage: test
+  script:
+    - uv run --no-sync pytest --junitxml=docs/evidence/junit.xml
+  artifacts:
+    when: always
+    reports:
+      junit: docs/evidence/junit.xml
+
+build:
+  stage: build
+  image:
+    name: moby/buildkit:v0.23.2-rootless
+    entrypoint: [""]
+  variables:
+    BUILDKITD_FLAGS: --oci-worker-no-process-sandbox
+  before_script:
+    - umask 077
+    - mkdir -p ~/.docker
+    - task_auth=$(printf '%s:%s' "$CI_REGISTRY_USER" "$CI_REGISTRY_PASSWORD" | base64 | tr -d '\n')
+    - printf '{"auths":{"%s":{"auth":"%s"}}}\n' "$CI_REGISTRY" "$task_auth" > ~/.docker/config.json
+  script:
+    - buildctl-daemonless.sh build --frontend dockerfile.v0 --local context=. --local dockerfile=. --opt platform=linux/amd64 --output "type=image,name=$CI_REGISTRY_IMAGE:build-$CI_PIPELINE_ID,push=true" --metadata-file build-metadata.json
+  artifacts:
+    paths: [build-metadata.json]
+    expire_in: 1 day
+
+test_alerts:
+  stage: test
+  image:
+    name: prom/prometheus:v3.5.0
+    entrypoint: [""]
+  script:
+    - cmp mlops/deploy/alerts.yml mlops/grafana/chart/files/alerts.yml
+    - cmp mlops/deploy/loki.yml mlops/grafana/chart/files/loki.yml
+    - cmp mlops/grafana/dashboards/ecom.json mlops/grafana/chart/files/ecom.json
+    - cd mlops/deploy && promtool test rules alerts-test.yml
+
+save:
+  stage: save
+  image: alpine:3.22
+  needs: [build]
+  script:
+    - apk add --no-cache skopeo jq
+    - printf '%s' "$CI_REGISTRY_PASSWORD" | skopeo login --username "$CI_REGISTRY_USER" --password-stdin "$CI_REGISTRY"
+    - task_digest=$(jq -er '."containerimage.digest"' build-metadata.json)
+    - skopeo copy --preserve-digests "docker://$CI_REGISTRY_IMAGE@$task_digest" "docker://$CI_REGISTRY_IMAGE:$CI_COMMIT_SHA"
+    - printf '%s@%s\n' "$CI_REGISTRY_IMAGE" "$task_digest" > image-digest.txt
+  artifacts:
+    paths: [image-digest.txt]
+
+deploy:
+  stage: deploy
+  image: alpine:3.22
+  needs: [save]
+  rules:
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+      when: manual
+  before_script:
+    - apk add --no-cache openssh-client
+    - mkdir -p ~/.ssh
+    - printf '%s' "$SSH_PRIVATE_KEY_B64" | base64 -d > ~/.ssh/id_ed25519
+    - chmod 600 ~/.ssh/id_ed25519
+    - printf '%s' "$SSH_KNOWN_HOSTS_B64" | base64 -d > ~/.ssh/known_hosts
+  script:
+    - test -n "$MODEL_VERSION" && test -n "$MODEL_MANIFEST_KEY"
+    - export APP_IMAGE="$(cat image-digest.txt)"
+    - sh scripts/ci_deploy.sh
+
+deploy_k8s:
+  extends: .python
+  stage: deploy
+  needs: [save]
+  resource_group: ecom-kubernetes
+  rules:
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+      when: manual
+  script:
+    - apt-get update -qq && apt-get install -y -qq curl ca-certificates
+    - sh scripts/install_k8s_tools.sh
+    - export PATH="$PWD/.artifacts/bin:$PATH"
+    - umask 077
+    - mkdir -p .secrets
+    - printf '%s' "$KUBE_CONFIG_B64" | base64 -d > .secrets/kubeconfig
+    - export KUBECONFIG="$PWD/.secrets/kubeconfig"
+    - export APP_IMAGE="$(cat image-digest.txt)"
+    - uv run --no-sync python -m scripts.deploy_k8s
+  artifacts:
+    when: always
+    paths: [.artifacts/k8s-ci-smoke.json, .artifacts/k8s-port-forward.log]

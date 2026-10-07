@@ -1,0 +1,18 @@
+{
+  "s3": "head_bucket OK",
+  "project": {
+    "id": 845,
+    "visibility": "public",
+    "container_registry_enabled": true,
+    "container_registry_image_prefix": "mlops.gitlab.yandexcloud.net:5050/s87443/mlops_final_project_reznik_vasilii",
+    "shared_runners_enabled": true
+  },
+  "runners": [
+    {
+      "id": 2,
+      "status": "online",
+      "online": true,
+      "runner_type": "instance_type"
+    }
+  ]
+}

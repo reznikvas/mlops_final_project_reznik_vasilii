@@ -1,0 +1,144 @@
+{
+  "checked_at": "2026-10-06T17:09:25.161126+00:00",
+  "namespace": "r-mlops-k8s-12-1-1-185869805",
+  "quota": {
+    "hard": {
+      "configmaps": "20",
+      "limits.cpu": "2",
+      "limits.memory": "8Gi",
+      "persistentvolumeclaims": "4",
+      "pods": "20",
+      "requests.cpu": "500m",
+      "requests.memory": "4Gi",
+      "requests.storage": "5Gi",
+      "secrets": "20",
+      "services": "10",
+      "services.loadbalancers": "0",
+      "services.nodeports": "0"
+    },
+    "used": {
+      "configmaps": "3",
+      "limits.cpu": "1700m",
+      "limits.memory": "3328Mi",
+      "persistentvolumeclaims": "3",
+      "pods": "5",
+      "requests.cpu": "300m",
+      "requests.memory": "1664Mi",
+      "requests.storage": "4Gi",
+      "secrets": "6",
+      "services": "5",
+      "services.loadbalancers": "0",
+      "services.nodeports": "0"
+    }
+  },
+  "pods": [
+    {
+      "name": "ecom-64f5d67969-blxlw",
+      "uid": "c4c14bdc-c9c7-405b-9d9b-e7b771ff02ca",
+      "phase": "Running",
+      "containers": [
+        {
+          "name": "api",
+          "ready": true,
+          "restartCount": 0,
+          "image": "sha256:aaf6b7deedfa94a0372686ccb76b5fb479a7c087fc432d26a54f110974d452f9",
+          "imageID": "mlops.gitlab.yandexcloud.net:5050/s87443/mlops_final_project_reznik_vasilii@sha256:09299a8ddb1307c0249f3095c1d71de63f0a9bf73df21b7b391649984fe56a28"
+        }
+      ],
+      "model_init_exit_code": 0,
+      "model_init_log": "Модель проверена: f21822b6eef45530-9b2c1d2a64cd",
+      "api_has_s3_secret": false,
+      "api_model_read_only": true
+    },
+    {
+      "name": "ecom-monitoring-alloy-695c94dcf8-zph4w",
+      "uid": "1d3dcfc8-fbd3-4a98-a7ea-7cc58936c4e9",
+      "phase": "Running",
+      "containers": [
+        {
+          "name": "alloy",
+          "ready": true,
+          "restartCount": 0,
+          "image": "docker.io/grafana/alloy:v1.9.2",
+          "imageID": "docker.io/grafana/alloy@sha256:5039cc7a3cbde07120e757decc40f8f55f82c9bd0db45892a8b0e0c9a3371f4b"
+        }
+      ]
+    },
+    {
+      "name": "ecom-monitoring-grafana-847c58456f-s95vf",
+      "uid": "ba4a8f9e-9ffd-43ee-987c-347cc2c98b71",
+      "phase": "Running",
+      "containers": [
+        {
+          "name": "grafana",
+          "ready": true,
+          "restartCount": 0,
+          "image": "docker.io/grafana/grafana:12.1.1",
+          "imageID": "docker.io/grafana/grafana@sha256:a1701c2180249361737a99a01bc770db39381640e4d631825d38ff4535efa47d"
+        }
+      ]
+    },
+    {
+      "name": "ecom-monitoring-loki-58c75dbdd5-4h6t7",
+      "uid": "a8d9de1b-2208-46e6-aa87-71e9deb1f7ad",
+      "phase": "Running",
+      "containers": [
+        {
+          "name": "loki",
+          "ready": true,
+          "restartCount": 0,
+          "image": "docker.io/grafana/loki:3.5.3",
+          "imageID": "docker.io/grafana/loki@sha256:3165cecce301ce5b9b6e3530284b080934a05cd5cafac3d3d82edcb887b45ecd"
+        }
+      ]
+    },
+    {
+      "name": "ecom-monitoring-prometheus-5588997ffd-jrfvm",
+      "uid": "4189b514-dda7-413d-b711-195b9abb6b58",
+      "phase": "Running",
+      "containers": [
+        {
+          "name": "prometheus",
+          "ready": true,
+          "restartCount": 0,
+          "image": "docker.io/prom/prometheus:v3.5.0",
+          "imageID": "docker.io/prom/prometheus@sha256:63805ebb8d2b3920190daf1cb14a60871b16fd38bed42b857a3182bc621f4996"
+        }
+      ]
+    }
+  ],
+  "pvc": [
+    {
+      "name": "ecom-monitoring-grafana",
+      "phase": "Bound",
+      "capacity": {
+        "storage": "1Gi"
+      },
+      "storageClass": "yc-network-hdd"
+    },
+    {
+      "name": "ecom-monitoring-loki",
+      "phase": "Bound",
+      "capacity": {
+        "storage": "2Gi"
+      },
+      "storageClass": "yc-network-hdd"
+    },
+    {
+      "name": "ecom-monitoring-prometheus",
+      "phase": "Bound",
+      "capacity": {
+        "storage": "1Gi"
+      },
+      "storageClass": "yc-network-hdd"
+    }
+  ],
+  "helm": [
+    {
+      "name": "ecom-monitoring",
+      "revision": "3",
+      "status": "deployed",
+      "chart": "ecom-monitoring-1.0.0"
+    }
+  ]
+}

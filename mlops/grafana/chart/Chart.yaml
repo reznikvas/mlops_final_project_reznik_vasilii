@@ -1,0 +1,6 @@
+apiVersion: v2
+name: ecom-monitoring
+version: 1.0.0
+description: Мониторинг инференса в учебном namespace Kubernetes
+type: application
+appVersion: "1.0.0"

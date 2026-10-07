@@ -1,0 +1,24 @@
+{
+  "checked_at": "2026-10-06T17:10:59.942285+00:00",
+  "scope": "isolated Docker network namespace; kubectl port-forward to Kubernetes service/ecom",
+  "image": "mlops.gitlab.yandexcloud.net:5050/s87443/mlops_final_project_reznik_vasilii@sha256:09299a8ddb1307c0249f3095c1d71de63f0a9bf73df21b7b391649984fe56a28",
+  "url": "http://127.0.0.1:8080/v2/models/ecom/infer",
+  "status": 200,
+  "response": {
+    "model_name": "ecom",
+    "model_version": "f21822b6eef45530-9b2c1d2a64cd",
+    "outputs": [
+      {
+        "name": "purchase_probability",
+        "shape": [
+          1,
+          1
+        ],
+        "datatype": "FP64",
+        "data": [
+          0.014421234235027114
+        ]
+      }
+    ]
+  }
+}

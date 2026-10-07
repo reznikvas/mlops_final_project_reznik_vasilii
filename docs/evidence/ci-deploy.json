@@ -1,0 +1,10 @@
+{
+  "checked_at": "2026-10-06T17:06:32.843148+00:00",
+  "deployment_method": "GitLab Runner, pipeline 11202",
+  "vm_job_url": "https://mlops.gitlab.yandexcloud.net/s87443/mlops_final_project_reznik_vasilii/-/jobs/66164",
+  "kubernetes_job_url": "https://mlops.gitlab.yandexcloud.net/s87443/mlops_final_project_reznik_vasilii/-/jobs/66165",
+  "running_image_vm": "mlops.gitlab.yandexcloud.net:5050/s87443/mlops_final_project_reznik_vasilii@sha256:09299a8ddb1307c0249f3095c1d71de63f0a9bf73df21b7b391649984fe56a28",
+  "running_image_kubernetes": "mlops.gitlab.yandexcloud.net:5050/s87443/mlops_final_project_reznik_vasilii@sha256:09299a8ddb1307c0249f3095c1d71de63f0a9bf73df21b7b391649984fe56a28",
+  "model_version": "f21822b6eef45530-9b2c1d2a64cd",
+  "kubernetes_ci_smoke": "11 passed"
+}

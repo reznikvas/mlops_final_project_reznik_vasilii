@@ -1,0 +1,11 @@
+*
+!requirements.txt
+!src/
+!src/**
+!scripts/
+!scripts/**
+!mlops/
+!mlops/airflow/
+!mlops/airflow/preprocessing_data.py
+!mlops/airflow/Dockerfile
+**/__pycache__

@@ -1,0 +1,34 @@
+{
+  "source_commit": "560c0d1d0906c962a50874e570afbb57f0baf2b7",
+  "prepare_completed": true,
+  "train_completed": true,
+  "rows": 2670609,
+  "positives": 35640,
+  "duplicate_view_keys": 6391,
+  "features": [
+    "views",
+    "purchases",
+    "ctr",
+    "hour",
+    "weekday",
+    "categoryid",
+    "available"
+  ],
+  "files": {
+    "data_for_training.parquet": {
+      "sha256": "1aa92e36c1b0d5146c1f78c16cb2b0ebc18e9b2d6e83e89ebc0129957ba6bf23"
+    },
+    "item_features.parquet": {
+      "sha256": "3511706312a03d38e83fa01efa708eb8e35d3c83378b60d7259adc9b0fe31be2"
+    },
+    "ranker.pkl": {
+      "sha256": "8023f73a98d421715a9ce61a97f59e9cf1f07f769c4ec3cf830b9432012691f3"
+    }
+  },
+  "limitations": [
+    "Используется только part1",
+    "Популярность использует будущие события",
+    "Нет отложенного test",
+    "Объединение покупок размножает просмотры"
+  ]
+}

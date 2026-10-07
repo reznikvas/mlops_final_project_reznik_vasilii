@@ -1,0 +1,117 @@
+{
+  "checked_at": "2026-10-06T17:06:29.031319+00:00",
+  "prometheus": {
+    "up{job=\"ecom\"}": [
+      {
+        "metric": {
+          "__name__": "up",
+          "instance": "api:8000",
+          "job": "ecom"
+        },
+        "value": [
+          1791306440.793,
+          "1"
+        ]
+      }
+    ],
+    "model_ready": [
+      {
+        "metric": {
+          "__name__": "model_ready",
+          "instance": "api:8000",
+          "job": "ecom"
+        },
+        "value": [
+          1791306440.892,
+          "1"
+        ]
+      }
+    ],
+    "purchase_probability_count": [
+      {
+        "metric": {
+          "__name__": "purchase_probability_count",
+          "instance": "api:8000",
+          "job": "ecom"
+        },
+        "value": [
+          1791306440.983,
+          "120"
+        ]
+      }
+    ],
+    "sum(rate(http_requests_total[2m]))": [
+      {
+        "metric": {},
+        "value": [
+          1791306441.092,
+          "0.9864066666666667"
+        ]
+      }
+    ],
+    "sum(rate(http_request_duration_seconds_count[2m]))": [
+      {
+        "metric": {},
+        "value": [
+          1791306441.183,
+          "0.9983470833333333"
+        ]
+      }
+    ]
+  },
+  "loki": [
+    {
+      "stream": {
+        "detected_level": "unknown",
+        "job": "ecom",
+        "service_name": "ecom"
+      },
+      "values": [
+        [
+          "1791306425243601566",
+          "{\"event\": \"prediction\", \"itemid\": 356475, \"probability\": 0.018236688173261722, \"model_version\": \"f21822b6eef45530-9b2c1d2a64cd\"}"
+        ],
+        [
+          "1791306424964847895",
+          "{\"event\": \"prediction\", \"itemid\": 356475, \"probability\": 0.016325120760184178, \"model_version\": \"f21822b6eef45530-9b2c1d2a64cd\"}"
+        ],
+        [
+          "1791306424682820796",
+          "{\"event\": \"prediction\", \"itemid\": 356475, \"probability\": 0.020247789599094082, \"model_version\": \"f21822b6eef45530-9b2c1d2a64cd\"}"
+        ],
+        [
+          "1791306424398965678",
+          "{\"event\": \"prediction\", \"itemid\": 356475, \"probability\": 0.01908927940338979, \"model_version\": \"f21822b6eef45530-9b2c1d2a64cd\"}"
+        ],
+        [
+          "1791306424113503773",
+          "{\"event\": \"prediction\", \"itemid\": 356475, \"probability\": 0.021798564090705682, \"model_version\": \"f21822b6eef45530-9b2c1d2a64cd\"}"
+        ],
+        [
+          "1791306423813435433",
+          "{\"event\": \"prediction\", \"itemid\": 356475, \"probability\": 0.024947423788780697, \"model_version\": \"f21822b6eef45530-9b2c1d2a64cd\"}"
+        ],
+        [
+          "1791306423525303111",
+          "{\"event\": \"prediction\", \"itemid\": 356475, \"probability\": 0.02398426275280036, \"model_version\": \"f21822b6eef45530-9b2c1d2a64cd\"}"
+        ],
+        [
+          "1791306423235833443",
+          "{\"event\": \"prediction\", \"itemid\": 356475, \"probability\": 0.024732420931124446, \"model_version\": \"f21822b6eef45530-9b2c1d2a64cd\"}"
+        ],
+        [
+          "1791306422959238225",
+          "{\"event\": \"prediction\", \"itemid\": 356475, \"probability\": 0.01396550779137969, \"model_version\": \"f21822b6eef45530-9b2c1d2a64cd\"}"
+        ],
+        [
+          "1791306422687505644",
+          "{\"event\": \"prediction\", \"itemid\": 356475, \"probability\": 0.010600446226727312, \"model_version\": \"f21822b6eef45530-9b2c1d2a64cd\"}"
+        ]
+      ]
+    }
+  ],
+  "grafana": {
+    "uid": "ecom",
+    "panels": 8
+  }
+}

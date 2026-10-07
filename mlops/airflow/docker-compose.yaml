@@ -1,0 +1,36 @@
+name: ecom-airflow
+services:
+  postgres:
+    image: postgres:16.10-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: airflow
+      POSTGRES_PASSWORD: ${AIRFLOW_DB_PASSWORD:?}
+      POSTGRES_DB: airflow
+    volumes: ["postgres:/var/lib/postgresql/data"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U airflow"]
+      interval: 5s
+      retries: 20
+  airflow:
+    image: ecom-airflow:2.11.0
+    build:
+      context: ../..
+      dockerfile: mlops/airflow/Dockerfile
+    environment:
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:${AIRFLOW_DB_PASSWORD:?}@postgres/airflow
+      AIRFLOW__CORE__FERNET_KEY: ${AIRFLOW_FERNET_KEY:?}
+      AIRFLOW__WEBSERVER__SECRET_KEY: ${AIRFLOW_WEB_SECRET:?}
+      AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+      AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: "false"
+      AIRFLOW__WEBSERVER__EXPOSE_CONFIG: "false"
+    command: standalone
+    ports: ["127.0.0.1:8082:8080"]
+    volumes: ["airflow:/opt/airflow/logs"]
+    depends_on:
+      postgres: {condition: service_healthy}
+    restart: unless-stopped
+volumes:
+  postgres:
+  airflow:

@@ -1,0 +1,59 @@
+name: ecom-clearml
+services:
+  mongo:
+    image: mongo:8.0.15
+    volumes: ["mongo:/data/db"]
+    restart: unless-stopped
+  redis:
+    image: redis:8.2.3
+    volumes: ["redis:/data"]
+    restart: unless-stopped
+  elasticsearch:
+    image: elasticsearch:8.19.9
+    environment:
+      discovery.type: single-node
+      xpack.security.enabled: "false"
+      ES_JAVA_OPTS: -Xms1g -Xmx1g
+      cluster.routing.allocation.disk.threshold_enabled: "false"
+    volumes: ["elastic:/usr/share/elasticsearch/data"]
+    restart: unless-stopped
+  apiserver:
+    image: clearml/server:2.4.0
+    command: apiserver
+    environment:
+      CLEARML_ELASTIC_SERVICE_HOST: elasticsearch
+      CLEARML_MONGODB_SERVICE_HOST: mongo
+      CLEARML_REDIS_SERVICE_HOST: redis
+      CLEARML_SERVER_DEPLOYMENT_TYPE: linux
+      CLEARML__secure__credentials__services_agent__user_key: ${CLEARML_API_ACCESS_KEY:?}
+      CLEARML__secure__credentials__services_agent__user_secret: ${CLEARML_API_SECRET_KEY:?}
+    ports: ["127.0.0.1:8008:8008"]
+    volumes: ["files:/mnt/fileserver"]
+    depends_on: [mongo, redis, elasticsearch]
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8008/debug.ping', timeout=3)"]
+      interval: 10s
+      timeout: 5s
+      retries: 18
+      start_period: 30s
+    restart: unless-stopped
+  fileserver:
+    image: clearml/server:2.4.0
+    command: fileserver
+    ports: ["127.0.0.1:8081:8081"]
+    volumes: ["files:/mnt/fileserver"]
+    depends_on:
+      apiserver: {condition: service_healthy}
+    restart: unless-stopped
+  webserver:
+    image: clearml/server:2.4.0
+    command: webserver
+    ports: ["127.0.0.1:8080:80"]
+    depends_on:
+      apiserver: {condition: service_healthy}
+    restart: unless-stopped
+volumes:
+  mongo:
+  redis:
+  elastic:
+  files:

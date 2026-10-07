@@ -1,0 +1,21 @@
+[2026-10-05T17:44:25.664+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2026-10-05T17:44:25.690+0000] {taskinstance.py:2631} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: preprocessing_data.prepare_from_s3 ecom-final-20261005 [queued]>
+[2026-10-05T17:44:25.699+0000] {taskinstance.py:2631} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: preprocessing_data.prepare_from_s3 ecom-final-20261005 [queued]>
+[2026-10-05T17:44:25.699+0000] {taskinstance.py:2884} INFO - Starting attempt 1 of 2
+[2026-10-05T17:44:25.713+0000] {taskinstance.py:2907} INFO - Executing <Task(_PythonDecoratedOperator): prepare_from_s3> on 2026-10-05 17:44:24+00:00
+[2026-10-05T17:44:25.720+0000] {logging_mixin.py:190} WARNING - /home/airflow/.local/lib/python3.12/site-packages/airflow/task/task_runner/standard_task_runner.py:70 DeprecationWarning: This process (pid=221) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2026-10-05T17:44:25.721+0000] {standard_task_runner.py:72} INFO - Started process 222 to run task
+[2026-10-05T17:44:25.720+0000] {standard_task_runner.py:104} INFO - Running: ['airflow', 'tasks', 'run', 'preprocessing_data', 'prepare_from_s3', 'ecom-final-20261005', '--job-id', '8', '--raw', '--subdir', 'DAGS_FOLDER/preprocessing_data.py', '--cfg-path', '/tmp/tmpxeppegbk']
+[2026-10-05T17:44:25.722+0000] {standard_task_runner.py:105} INFO - Job 8: Subtask prepare_from_s3
+[2026-10-05T17:44:25.782+0000] {task_command.py:467} INFO - Running <TaskInstance: preprocessing_data.prepare_from_s3 ecom-final-20261005 [running]> on host 613da932c43e
+[2026-10-05T17:44:25.891+0000] {taskinstance.py:3157} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='airflow' AIRFLOW_CTX_DAG_ID='preprocessing_data' AIRFLOW_CTX_TASK_ID='prepare_from_s3' AIRFLOW_CTX_EXECUTION_DATE='2026-10-05T17:44:24+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='ecom-final-20261005'
+[2026-10-05T17:44:25.892+0000] {taskinstance.py:740} INFO - ::endgroup::
+[2026-10-05T17:44:26.475+0000] {base.py:84} INFO - Retrieving connection 'ecom_s3'
+[2026-10-05T17:44:26.490+0000] {credentials.py:1224} INFO - Found credentials in environment variables.
+[2026-10-05T17:45:04.283+0000] {logging_mixin.py:190} INFO - Обработка завершена: {'train': {'rows': 1029905, 'positives': 14100, 'prevalence': 0.013690583112034605, 'min_timestamp': 1433006643693, 'max_timestamp': 1437689513225}, 'validation': {'rows': 460232, 'positives': 5463, 'prevalence': 0.011870100297241391, 'min_timestamp': 1437775916537, 'max_timestamp': 1440074060932}, 'test': {'rows': 404873, 'positives': 4533, 'prevalence': 0.011196103469483023, 'min_timestamp': 1440160581851, 'max_timestamp': 1442458773320}}
+[2026-10-05T17:45:04.415+0000] {python.py:240} INFO - Done. Returned value was: Reznik_Vasilii_project/processed_data/f21822b6eef45530/manifest.json
+[2026-10-05T17:45:04.447+0000] {taskinstance.py:349} INFO - ::group::Post task execution logs
+[2026-10-05T17:45:04.448+0000] {taskinstance.py:361} INFO - Marking task as SUCCESS. dag_id=preprocessing_data, task_id=prepare_from_s3, run_id=ecom-final-20261005, execution_date=20261005T174424, start_date=20261005T174425, end_date=20261005T174504
+[2026-10-05T17:45:04.545+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 0
+[2026-10-05T17:45:04.568+0000] {taskinstance.py:3924} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-10-05T17:45:04.572+0000] {local_task_job_runner.py:245} INFO - ::endgroup::

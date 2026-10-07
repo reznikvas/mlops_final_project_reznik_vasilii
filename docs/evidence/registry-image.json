@@ -1,0 +1,6 @@
+{
+  "pipeline_id": 11202,
+  "build_job_id": 66162,
+  "commit": "d9fc6df9cb0b55cfdef1c20e0da074efd98cfc76",
+  "image": "mlops.gitlab.yandexcloud.net:5050/s87443/mlops_final_project_reznik_vasilii@sha256:09299a8ddb1307c0249f3095c1d71de63f0a9bf73df21b7b391649984fe56a28"
+}

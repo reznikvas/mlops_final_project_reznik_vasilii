@@ -1,0 +1,54 @@
+# Синтетические ряды проверяют правила без внесения ошибок в рабочее API.
+rule_files: [alerts.yml]
+evaluation_interval: 10s
+tests:
+  - name: недоступность и восстановление
+    interval: 10s
+    input_series:
+      - series: 'up{job="ecom",instance="api:8000"}'
+        values: '1 0+0x5 1+0x20'
+      - series: 'model_ready{job="ecom",instance="api:8000"}'
+        values: '1+0x30'
+    alert_rule_test:
+      - eval_time: 50s
+        alertname: EcomUnavailable
+        exp_alerts:
+          - exp_labels: {job: ecom, instance: 'api:8000', severity: critical}
+            exp_annotations: {summary: Сервис или модель недоступны}
+      - eval_time: 90s
+        alertname: EcomUnavailable
+        exp_alerts: []
+  - name: серверные ошибки и восстановление
+    interval: 10s
+    input_series:
+      - series: 'http_requests_total{status="200"}'
+        values: '0+90x30 2700+100x60'
+      - series: 'http_requests_total{status="503"}'
+        values: '0+10x30 300+0x60'
+    alert_rule_test:
+      - eval_time: 3m
+        alertname: EcomServerErrors
+        exp_alerts:
+          - exp_labels: {severity: warning}
+            exp_annotations: {summary: Более 5% запросов завершаются серверной ошибкой}
+      - eval_time: 9m
+        alertname: EcomServerErrors
+        exp_alerts: []
+  - name: высокая задержка и восстановление
+    interval: 10s
+    input_series:
+      - series: 'http_request_duration_seconds_bucket{le="1"}'
+        values: '0+50x36 1800+100x90'
+      - series: 'http_request_duration_seconds_bucket{le="2"}'
+        values: '0+100x126'
+      - series: 'http_request_duration_seconds_bucket{le="+Inf"}'
+        values: '0+100x126'
+    alert_rule_test:
+      - eval_time: 4m
+        alertname: EcomLatency
+        exp_alerts:
+          - exp_labels: {severity: warning}
+            exp_annotations: {summary: Задержка p95 превышает эксплуатационный предел 1 с}
+      - eval_time: 15m
+        alertname: EcomLatency
+        exp_alerts: []

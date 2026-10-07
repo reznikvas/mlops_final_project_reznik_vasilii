@@ -1,0 +1,68 @@
+{
+  "checked_at": "2026-10-06T17:05:13.613435+00:00",
+  "checks": [
+    {
+      "path": "/v2",
+      "status": 200
+    },
+    {
+      "path": "/v2/health/live",
+      "status": 200
+    },
+    {
+      "path": "/v2/health/ready",
+      "status": 200
+    },
+    {
+      "path": "/v2/models/ecom",
+      "status": 200
+    },
+    {
+      "path": "/v2/models/ecom/ready",
+      "status": 200
+    },
+    {
+      "path": "/v2/models/ecom/infer",
+      "status": 200
+    },
+    {
+      "path": "POST infer + parity",
+      "status": 200
+    },
+    {
+      "path": "/v2/models/absent/infer",
+      "status": 404
+    },
+    {
+      "path": "/v2/models/ecom/infer?itemid=999999999",
+      "status": 404
+    },
+    {
+      "path": "/v2/models/ecom/infer?hour=24",
+      "status": 400
+    },
+    {
+      "path": "POST invalid shape",
+      "status": 400
+    }
+  ],
+  "prediction": {
+    "model_name": "ecom",
+    "model_version": "f21822b6eef45530-9b2c1d2a64cd",
+    "id": "smoke-v2",
+    "outputs": [
+      {
+        "name": "purchase_probability",
+        "shape": [
+          2,
+          1
+        ],
+        "datatype": "FP64",
+        "data": [
+          0.014421234235027114,
+          0.014421234235027114
+        ]
+      }
+    ]
+  }
+}

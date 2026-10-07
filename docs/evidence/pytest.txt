@@ -1,0 +1,21 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.13, pytest-9.0.0, pluggy-1.6.0
+rootdir: /builds/s87443/mlops_final_project_reznik_vasilii
+configfile: pyproject.toml
+testpaths: tests
+plugins: anyio-4.15.1, platformdirs-4.12.3
+collected 29 items
+
+tests/test_data.py ...                                                   [ 10%]
+tests/test_main.py ........                                              [ 37%]
+tests/test_storage.py ..                                                 [ 44%]
+tests/test_v2.py ................                                        [100%]
+
+=============================== warnings summary ===============================
+.venv/lib/python3.12/site-packages/starlette/testclient.py:37
+  /builds/s87443/mlops_final_project_reznik_vasilii/.venv/lib/python3.12/site-packages/starlette/testclient.py:37: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.
+    _PortalFactoryType = typing.Callable[[], typing.ContextManager[anyio.abc.BlockingPortal]]
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+- generated xml file: /builds/s87443/mlops_final_project_reznik_vasilii/docs/evidence/junit.xml -
+======================== 29 passed, 1 warning in 3.21s =========================

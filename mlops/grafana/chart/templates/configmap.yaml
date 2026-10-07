@@ -1,0 +1,74 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-config
+data:
+  prometheus.yml: |
+    global:
+      scrape_interval: 10s
+      evaluation_interval: 10s
+    rule_files: [/etc/prometheus/alerts.yml]
+    scrape_configs:
+      - job_name: ecom
+        static_configs:
+          - targets: ["{{ .Values.apiService }}:8000"]
+  alerts.yml: |
+{{ .Files.Get "files/alerts.yml" | indent 4 }}
+  loki.yml: |
+{{ .Files.Get "files/loki.yml" | indent 4 }}
+  datasources.yml: |
+    apiVersion: 1
+    datasources:
+      - name: Prometheus
+        uid: prometheus
+        type: prometheus
+        access: proxy
+        url: http://{{ .Release.Name }}-prometheus:9090
+        isDefault: true
+      - name: Loki
+        uid: loki
+        type: loki
+        access: proxy
+        url: http://{{ .Release.Name }}-loki:3100
+  dashboards.yml: |
+    apiVersion: 1
+    providers:
+      - name: ecom
+        folder: Ecom
+        type: file
+        options:
+          path: /var/lib/grafana/dashboards
+  ecom.json: |
+{{ .Files.Get "files/ecom.json" | indent 4 }}
+  config.alloy: |
+    discovery.kubernetes "pods" {
+      role = "pod"
+      namespaces { names = ["{{ .Release.Namespace }}"] }
+      selectors {
+        role = "pod"
+        label = "app=ecom"
+      }
+    }
+    discovery.relabel "api" {
+      targets = discovery.kubernetes.pods.targets
+      rule {
+        source_labels = ["__meta_kubernetes_pod_container_name"]
+        regex = "api"
+        action = "keep"
+      }
+      rule {
+        target_label = "job"
+        replacement = "ecom"
+      }
+      rule {
+        source_labels = ["__meta_kubernetes_pod_name"]
+        target_label = "pod"
+      }
+    }
+    loki.source.kubernetes "api" {
+      targets = discovery.relabel.api.output
+      forward_to = [loki.write.local.receiver]
+    }
+    loki.write "local" {
+      endpoint { url = "http://{{ .Release.Name }}-loki:3100/loki/api/v1/push" }
+    }

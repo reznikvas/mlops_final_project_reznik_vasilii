@@ -1,0 +1,54 @@
+# Имена Secret и сервиса относятся к текущему namespace.
+apiService: ecom
+grafanaSecret: ecom-grafana
+components:
+  prometheus:
+    image: prom/prometheus:v3.5.0
+    port: 9090
+    uid: 65534
+    configName: prometheus.yml
+    configPath: /etc/prometheus/prometheus.yml
+    dataPath: /prometheus
+    storage: 1Gi
+    args: ["--config.file=/etc/prometheus/prometheus.yml", "--storage.tsdb.path=/prometheus", "--storage.tsdb.retention.time=24h", "--storage.tsdb.retention.size=700MB"]
+    resources:
+      requests: {cpu: 50m, memory: 256Mi}
+      limits: {cpu: 250m, memory: 512Mi}
+    health: /-/ready
+  loki:
+    image: grafana/loki:3.5.3
+    port: 3100
+    uid: 10001
+    configName: loki.yml
+    configPath: /etc/loki/config.yaml
+    dataPath: /loki
+    storage: 2Gi
+    args: ["-config.file=/etc/loki/config.yaml"]
+    resources:
+      requests: {cpu: 75m, memory: 512Mi}
+      limits: {cpu: 500m, memory: 1Gi}
+    health: /ready
+  grafana:
+    image: grafana/grafana:12.1.1
+    port: 3000
+    uid: 472
+    configName: datasources.yml
+    configPath: /etc/grafana/provisioning/datasources/default.yml
+    dataPath: /var/lib/grafana
+    storage: 1Gi
+    resources:
+      requests: {cpu: 50m, memory: 256Mi}
+      limits: {cpu: 250m, memory: 512Mi}
+    health: /api/health
+  alloy:
+    image: grafana/alloy:v1.9.2
+    port: 12345
+    uid: 473
+    configName: config.alloy
+    configPath: /etc/alloy/config.alloy
+    dataPath: /var/lib/alloy
+    args: ["run", "--server.http.listen-addr=0.0.0.0:12345", "--storage.path=/var/lib/alloy", "/etc/alloy/config.alloy"]
+    resources:
+      requests: {cpu: 25m, memory: 128Mi}
+      limits: {cpu: 200m, memory: 256Mi}
+    health: /-/ready

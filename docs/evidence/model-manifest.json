@@ -1,0 +1,156 @@
+{
+  "version": "f21822b6eef45530-9b2c1d2a64cd",
+  "schema_version": "1",
+  "features": [
+    "views",
+    "purchases",
+    "ctr",
+    "hour",
+    "weekday",
+    "categoryid",
+    "available"
+  ],
+  "processed_version": "f21822b6eef45530",
+  "processed_manifest_key": "Reznik_Vasilii_project/processed_data/f21822b6eef45530/manifest.json",
+  "processed_manifest_sha256": "ad71b498cb5a1f25c2733e16c99158599b54d9dfc116d53f64f1453859e9fb5b",
+  "snapshot_timestamp": 1433006641064,
+  "splits": {
+    "train": {
+      "rows": 1029905,
+      "positives": 14100,
+      "prevalence": 0.013690583112034605,
+      "min_timestamp": 1433006643693,
+      "max_timestamp": 1437689513225
+    },
+    "validation": {
+      "rows": 460232,
+      "positives": 5463,
+      "prevalence": 0.011870100297241391,
+      "min_timestamp": 1437775916537,
+      "max_timestamp": 1440074060932
+    },
+    "test": {
+      "rows": 404873,
+      "positives": 4533,
+      "prevalence": 0.011196103469483023,
+      "min_timestamp": 1440160581851,
+      "max_timestamp": 1442458773320
+    }
+  },
+  "selection_metric": "average_precision",
+  "winner": {
+    "index": 2,
+    "params": {
+      "depth": 6,
+      "iterations": 250,
+      "learning_rate": 0.08,
+      "random_seed": 42,
+      "loss_function": "Logloss",
+      "thread_count": 4,
+      "verbose": false,
+      "allow_writing_files": false
+    },
+    "validation": {
+      "average_precision": 0.029330422966353034,
+      "log_loss": 0.061449975249634026,
+      "brier": 0.011642182189362912,
+      "prevalence": 0.011870100297241391
+    },
+    "processed_version": "f21822b6eef45530",
+    "model_sha256": "9b2c1d2a64cd9c09cd601365f97642658c2e82a4e81c9c1c8330f042360c6be4"
+  },
+  "experiments": [
+    {
+      "index": 0,
+      "params": {
+        "depth": 4,
+        "iterations": 200,
+        "learning_rate": 0.08,
+        "random_seed": 42,
+        "loss_function": "Logloss",
+        "thread_count": 4,
+        "verbose": false,
+        "allow_writing_files": false
+      },
+      "validation": {
+        "average_precision": 0.02861926641068641,
+        "log_loss": 0.06155458937757729,
+        "brier": 0.011648205288439498,
+        "prevalence": 0.011870100297241391
+      },
+      "processed_version": "f21822b6eef45530",
+      "model_sha256": "8964ac26886025b4f406658458084d2bfc10872cdbb923be9c64981981418ef6"
+    },
+    {
+      "index": 1,
+      "params": {
+        "depth": 5,
+        "iterations": 300,
+        "learning_rate": 0.06,
+        "random_seed": 42,
+        "loss_function": "Logloss",
+        "thread_count": 4,
+        "verbose": false,
+        "allow_writing_files": false
+      },
+      "validation": {
+        "average_precision": 0.029132798895545937,
+        "log_loss": 0.061485654624565615,
+        "brier": 0.011643999893646959,
+        "prevalence": 0.011870100297241391
+      },
+      "processed_version": "f21822b6eef45530",
+      "model_sha256": "b324a81a5e80d84b10231056955e6863aef2a013083dad39193a01514434e0d0"
+    },
+    {
+      "index": 2,
+      "params": {
+        "depth": 6,
+        "iterations": 250,
+        "learning_rate": 0.08,
+        "random_seed": 42,
+        "loss_function": "Logloss",
+        "thread_count": 4,
+        "verbose": false,
+        "allow_writing_files": false
+      },
+      "validation": {
+        "average_precision": 0.029330422966353034,
+        "log_loss": 0.061449975249634026,
+        "brier": 0.011642182189362912,
+        "prevalence": 0.011870100297241391
+      },
+      "processed_version": "f21822b6eef45530",
+      "model_sha256": "9b2c1d2a64cd9c09cd601365f97642658c2e82a4e81c9c1c8330f042360c6be4"
+    }
+  ],
+  "test": {
+    "average_precision": 0.024390395710391363,
+    "log_loss": 0.05949066079627501,
+    "brier": 0.011021231477578336,
+    "prevalence": 0.011196103469483023
+  },
+  "test_constant_baseline": {
+    "average_precision": 0.011196103469483023,
+    "log_loss": 0.06167382998681104,
+    "brier": 0.011076973165270752,
+    "prevalence": 0.011196103469483023
+  },
+  "seed": 42,
+  "training_code_sha256": "8988c26a053b4edd3528b824269d0d199dffe68e0160205e6321cab80c43aed8",
+  "versions": {
+    "catboost": "1.2.8",
+    "numpy": "2.2.5",
+    "pandas": "2.2.3",
+    "scikit-learn": "1.6.1",
+    "pyarrow": "22.0.0"
+  },
+  "files": {
+    "ranker.pkl": {
+      "sha256": "9b2c1d2a64cd9c09cd601365f97642658c2e82a4e81c9c1c8330f042360c6be4"
+    },
+    "item_features.parquet": {
+      "sha256": "5f3ec805f9e27248b9544e4439b76fbf31578b4fc640f89b0e9c4f035cab86eb"
+    }
+  }
+}

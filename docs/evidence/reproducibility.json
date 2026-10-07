@@ -1,0 +1,13 @@
+{
+  "version": "f21822b6eef45530",
+  "local_airflow_sha256_equal": true,
+  "files": {
+    "item_features.parquet": {
+      "sha256": "5f3ec805f9e27248b9544e4439b76fbf31578b4fc640f89b0e9c4f035cab86eb"
+    },
+    "data_for_training.parquet": {
+      "sha256": "868b8b93a7ee94775119b88ff8f75eb92526209bbf6c32af90469908e2dd92b8"
+    }
+  },
+  "airflow_replay_sha256_equal": true
+}

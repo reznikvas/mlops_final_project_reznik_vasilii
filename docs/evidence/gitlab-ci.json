@@ -1,0 +1,75 @@
+{
+  "pipeline": {
+    "id": 11202,
+    "sha": "d9fc6df9cb0b55cfdef1c20e0da074efd98cfc76",
+    "status": "success",
+    "web_url": "https://mlops.gitlab.yandexcloud.net/s87443/mlops_final_project_reznik_vasilii/-/pipelines/11202",
+    "created_at": "2026-10-06T16:51:00.523Z"
+  },
+  "jobs": [
+    {
+      "id": 66165,
+      "name": "deploy_k8s",
+      "stage": "deploy",
+      "status": "success",
+      "web_url": "https://mlops.gitlab.yandexcloud.net/s87443/mlops_final_project_reznik_vasilii/-/jobs/66165",
+      "failure_reason": null
+    },
+    {
+      "id": 66164,
+      "name": "deploy",
+      "stage": "deploy",
+      "status": "success",
+      "web_url": "https://mlops.gitlab.yandexcloud.net/s87443/mlops_final_project_reznik_vasilii/-/jobs/66164",
+      "failure_reason": null
+    },
+    {
+      "id": 66163,
+      "name": "save",
+      "stage": "save",
+      "status": "success",
+      "web_url": "https://mlops.gitlab.yandexcloud.net/s87443/mlops_final_project_reznik_vasilii/-/jobs/66163",
+      "failure_reason": null
+    },
+    {
+      "id": 66162,
+      "name": "build",
+      "stage": "build",
+      "status": "success",
+      "web_url": "https://mlops.gitlab.yandexcloud.net/s87443/mlops_final_project_reznik_vasilii/-/jobs/66162",
+      "failure_reason": null
+    },
+    {
+      "id": 66161,
+      "name": "test_alerts",
+      "stage": "test",
+      "status": "success",
+      "web_url": "https://mlops.gitlab.yandexcloud.net/s87443/mlops_final_project_reznik_vasilii/-/jobs/66161",
+      "failure_reason": null
+    },
+    {
+      "id": 66160,
+      "name": "test",
+      "stage": "test",
+      "status": "success",
+      "web_url": "https://mlops.gitlab.yandexcloud.net/s87443/mlops_final_project_reznik_vasilii/-/jobs/66160",
+      "failure_reason": null
+    },
+    {
+      "id": 66159,
+      "name": "formating",
+      "stage": "formating",
+      "status": "success",
+      "web_url": "https://mlops.gitlab.yandexcloud.net/s87443/mlops_final_project_reznik_vasilii/-/jobs/66159",
+      "failure_reason": null
+    },
+    {
+      "id": 66158,
+      "name": "lint",
+      "stage": "lint",
+      "status": "success",
+      "web_url": "https://mlops.gitlab.yandexcloud.net/s87443/mlops_final_project_reznik_vasilii/-/jobs/66158",
+      "failure_reason": null
+    }
+  ]
+}

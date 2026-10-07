@@ -1,0 +1,75 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ecom
+  labels: {app: ecom}
+spec:
+  replicas: 1
+  strategy: {type: Recreate}
+  selector:
+    matchLabels: {app: ecom}
+  template:
+    metadata:
+      labels: {app: ecom}
+    spec:
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        runAsGroup: 10001
+        fsGroup: 10001
+        seccompProfile: {type: RuntimeDefault}
+      initContainers:
+        - name: model-init
+          image: ${APP_IMAGE}
+          command: ["python", "-m", "scripts.download_model"]
+          envFrom:
+            - secretRef: {name: ecom-s3}
+          env:
+            - {name: MODEL_DIR, value: /models}
+            - {name: MODEL_VERSION, value: "${MODEL_VERSION}"}
+            - {name: MODEL_MANIFEST_KEY, value: "${MODEL_MANIFEST_KEY}"}
+          resources:
+            requests: {cpu: 100m, memory: 512Mi}
+            limits: {cpu: 500m, memory: 1Gi}
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: {drop: [ALL]}
+          volumeMounts:
+            - {name: models, mountPath: /models}
+            - {name: tmp, mountPath: /tmp}
+      containers:
+        - name: api
+          image: ${APP_IMAGE}
+          ports: [{name: http, containerPort: 8000}]
+          env:
+            - {name: MODEL_DIR, value: /models}
+            - {name: MODEL_VERSION, value: "${MODEL_VERSION}"}
+            - {name: MODEL_NAME, value: ecom}
+            - {name: OMP_NUM_THREADS, value: "1"}
+          resources:
+            requests: {cpu: 100m, memory: 512Mi}
+            limits: {cpu: 500m, memory: 1Gi}
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: {drop: [ALL]}
+          startupProbe:
+            httpGet: {path: /v2/health/ready, port: http}
+            periodSeconds: 5
+            failureThreshold: 60
+          readinessProbe:
+            httpGet: {path: /v2/models/ecom/ready, port: http}
+            periodSeconds: 5
+          livenessProbe:
+            httpGet: {path: /v2/health/live, port: http}
+            periodSeconds: 10
+          volumeMounts:
+            - {name: models, mountPath: /models, readOnly: true}
+            - {name: tmp, mountPath: /tmp}
+      volumes:
+        - name: models
+          emptyDir: {sizeLimit: 256Mi}
+        - name: tmp
+          emptyDir: {sizeLimit: 128Mi}

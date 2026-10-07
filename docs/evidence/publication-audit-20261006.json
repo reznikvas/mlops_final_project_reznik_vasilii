@@ -1,0 +1,11 @@
+{
+  "checked_at": "2026-10-06T17:12:10.505345+00:00",
+  "files_checked": 123,
+  "known_secrets_found": false,
+  "datasets_models_archives_in_git": false,
+  "local_status_report_tracked": false,
+  "local_document_links": "passed",
+  "ci_pipeline": 11202,
+  "ci_jobs_passed": 8,
+  "unit_tests_passed": 29
+}
